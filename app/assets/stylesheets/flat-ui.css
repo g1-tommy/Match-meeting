@@ -1,24 +1,27 @@
 @font-face{ 
 	font-family: 'BariolItalic';
-	src: url('bariol_regular_italic-webfont.eot');
-	src: url('bariol_regular_italic-webfont.eot?#iefix') format('embedded-opentype'),
-	     url('bariol_regular_italic-webfont.woff') format('woff'),
-	     url('bariol_regular_italic-webfont.ttf') format('truetype'),
-	     url('bariol_regular_italic-webfont.svg#webfont') format('svg');
+	src: url('/assets/bariol_regular_italic-webfont.eot');
+	src: url('/assets/bariol_regular_italic-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('/assets/bariol_regular_italic-webfont.woff') format('woff'),
+	     url('/assets/bariol_regular_italic-webfont.ttf') format('truetype'),
+	     url('/assets/bariol_regular_italic-webfont.svg#webfont') format('svg');
 }
 
 @font-face{ 
 	font-family: 'Bariol';
-	src: url('bariol_regular-webfont.eot');
-	src: url('bariol_regular-webfont.eot?#iefix') format('embedded-opentype'),
-	     url('bariol_regular-webfont.woff') format('woff'),
-	     url('bariol_regular-webfont.ttf') format('truetype'),
-	     url('bariol_regular-webfont.svg#webfont') format('svg');
+	src: url('/assets/bariol_regular-webfont.eot');
+	src: url('/assets/bariol_regular-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('/assets/bariol_regular-webfont.woff') format('woff'),
+	     url('/assets/bariol_regular-webfont.ttf') format('truetype'),
+	     url('/assets/bariol_regular-webfont.svg#webfont') format('svg');
 }
 @font-face {
   font-family: 'Flat-UI-Icons';
-  src: url('flat-ui-icons-regular.eot');
-  src: url('flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), url('flat-ui-icons-regular.woff') format('woff'), url('flat-ui-icons-regular.ttf') format('truetype'), url('flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
+  src: url('/assets/flat-ui-icons-regular.eot');
+  src: url('/assets/flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'),
+       url('/assets/flat-ui-icons-regular.woff') format('woff'),
+       url('/assets/flat-ui-icons-regular.ttf') format('truetype'),
+       url('/assets/flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
 }
 [class^="fui-"],
 [class*="fui-"] {
