@@ -1,0 +1,57 @@
+<%= render 'home/navbar' %>
+<main>
+<div class="valign-wrapper">
+  <div class="valign">
+    <h2><%= resource_name.to_s.humanize %> 계정 정보 변경</h2>
+    <hr>
+    <h5><%= current_user.email %>님</h5>
+    <blockquote>
+      <%= devise_error_messages! %>
+    </blockquote>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'login-form' }) do |f| %>
+      
+    
+      <div class="form-group">
+        <%= f.label :email, '이메일' %><br />
+        <%= f.email_field :email, autofocus: true, class:"form-control" %>
+      </div>
+    
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    
+      <div class="form-group">
+        <%= f.label :password, '변경할 패스워드' %> <i>(변경을 원하시지 않을 경우 빈칸으로 두십시오.)</i><br />
+        <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em>최소 <%= @minimum_password_length %>자 이상 입력 필요</em>
+        <% end %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password_confirmation, '패스워드 재확인' %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
+      </div>
+      <hr>
+      <div class="form-group">
+        <%= f.label :current_password, '현재 패스워드 입력' %> <i>(정보 변경을 위해 현재 패스워드 입력이 필요합니다.)</i><br />
+        <%= f.password_field :current_password, autocomplete: "off", class:"form-control" %>
+      </div>
+    
+      <div class="actions">
+        <%= f.submit "변경", class:"btn btn-primary btn-lg btn-block"  %>
+      </div>
+    <% end %>
+    <hr>
+    <div class="login-form" id="destroy">
+      <h3>계정 삭제</h3>
+      
+      <p>계정 삭제 후에는 더 이상 서비스를 이용하실 수 없으며,<br>현재 보관 중인 모든 데이터는 정보 보관 기간 만료 후 삭제됩니다. <%= button_to "계정 삭제 진행", registration_path(resource_name), data: { confirm: "탈퇴가 진행됩니다. 계속하시겠습니까?" }, method: :delete, class:"btn btn-warning btn-lg btn-block"  %></p>
+      
+      <%= link_to "돌아가기", :back, class:"btn btn-lg btn-block btn-danger" %>
+    </div>
+    <hr>
+  </div>
+</div>
+</main>

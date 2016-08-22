@@ -1,0 +1,29 @@
+<nav class="navbar navbar-inverse navbar-embossed navbar-static-top" role="navigation">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="/">SERVICE NAME</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+          <li <%= if current_page?(root_path) then 'class="active"'.html_safe end %>><a href="/">HOME</a></li>
+          <% if user_signed_in? then %>
+          <li <%= if current_page?(create_group_path) then 'class="active"'.html_safe end %>><a href="/create/group">그룹 생성</a></li>
+          <% end %>
+          <li <%= if current_page?(find_group_path) then 'class="active"'.html_safe end %>><a href="/find/group">그룹 찾기</a></li>
+          <% if owner_signed_in? then %>
+          <li <%= if current_page?(create_place_path) then 'class="active"'.html_safe end %>><a href="/create/place">장소 생성</a></li>
+          <% end %>
+          <li <%= if current_page?(find_place_path) then 'class="active"'.html_safe end %>><a href="/find/place">장소 찾기</a></li>
+          <li <%= if current_page?(mypage_path) then 'class="active"'.html_safe end %>><a href="/mypage">Mypage</a></li>
+      </ul>
+
+    <% if user_signed_in? then %>
+      <p class="navbar-text navbar-right">학생 계정으로 로그인됨</p>
+    <% elsif owner_signed_in? then %>
+      <p class="navbar-text navbar-right">카페 주인 계정으로 로그인됨</p>
+    <% end %>
+    <a href="<%= destroy_user_session_path %>" class="navbar-right btn btn-default navbar-btn btn-sm">로그아웃</a>
+    </div><!-- /.navbar-collapse -->
+  </nav>

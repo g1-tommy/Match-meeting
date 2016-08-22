@@ -1,0 +1,116 @@
+<%= render 'home/navbar' %>
+<main>
+    <% flash.each do |key, value| %>
+        <div class="row container">
+            <div class="tip <%= key %>" align="center">
+                <%= value %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" style="color:white;">&times;</span></button>
+            </div>
+        </div>
+        <br>
+    <% end %>
+    <div class="container">
+        <div class="four columns">
+            <h3><%= @group.name %></h3>
+            <hr>
+            <span>
+                <% if @creator == true then %>
+                    그룹 생성자입니다.
+                <% elsif @signed == "not_user" then %>
+                    <b>가입 불가</b>
+                <% else %>
+                    <% if @signed == false then %>
+                        <% if @group.member == 0 then %>
+                            <b>가입 불가</b>
+                        <% else %>
+                            <b>가입 가능</b>
+                        <% end %>
+                    <% else %>
+                        <b>이미 가입됨</b>
+                    <% end %>
+                <% end %>
+            </span><br>
+            <span><strong><%= @group.member %></strong>명 추가 가입 가능<%= if @group.member == 0 then '&nbsp;<b>[마감]</b>'.html_safe end %></span>
+            <hr>
+            <h5>생성자</h5>
+            <%= @group.creator %>
+            <% if @creator == true or @signed == true then %>
+            <hr>
+            <h5>그룹 가입자 목록</h5>
+                <% if @group.affiliation == nil or @group.affiliation == "" then %>
+                가입자가 없습니다.
+                <% else %>
+                    <% 0.upto(@group.affiliation.split('|').count-1) do |i| %>
+                        <%= @group.affiliation.split('|')[i] %>
+                        <% if @creator then %>
+                            <%= button_to "삭제", find_group_member_out_path, {method: :post, params:{group_id: params[:group_id] , member_info: @group.affiliation.split('|')[i]}, class:"btn btn-xs btn-block btn-warning"} %>
+                        <% end %>
+                        <br>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="eight columns">
+            <p>
+                <h5>그룹 정보</h5>
+                <%= @group.content %>
+                <% if @creator==true or @signed==true then %>
+                    <hr>
+                    <!-- IF AFFILIATED GROUP THEN -->
+                    <h5>그룹 활동에 적합한 시간을 추천합니다.</h5>
+                    <% if (@group.affiliation == nil or @group.affiliation == "") then %>
+                        아직 그룹에 가입자가 없어 시간 추천을 할 수 없습니다.
+                    <% else %>
+                        <% if @canbeGatheredAt != nil then %>
+                            <div class="tagsinput">
+                            <% days = ['월', '화', '수', '목', '금'] %>
+                            <% i = 0 %>
+                            <% j = 9 %>
+                            <% @canbeGatheredAt.each do |times| %>
+                                <% 0.upto(times.length-1) do |k| %>
+                                    <% if times[k] == "ABLE" then %>
+                                        <span class="tag"><%= days[i] %>요일 <%= j+k %>시 ~ <%= j+k+1 %>시</span>
+                                    <% end %>
+                                <% end %>
+                                <% i = i + 1 %>
+                            <% end %>
+                            </div>
+                            <div class="tip" align="center">
+                                ※ 모임 가능 시간대는 1시간 단위로 계산되어 추천됩니다.
+                                <hr>
+                                ※ 20시 이후의 개인 일정은 계산되지 않았습니다.
+                            </div>
+                        <% else %>
+                            그룹 내 가입자 간 팀프로젝트를 수행할 수 있는 적합한 시간대가 없습니다.
+                        <% end %>
+                    <% end %>
+                    
+                    <hr>
+                    <h5>그룹 모임 예정 장소</h5>
+                    <p>현재 예약된 장소가 없습니다.</p>
+                <% else %>
+                <% end %>
+            </p>
+            <hr>
+            <% if @creator == true then %>
+                <button class="btn btn-lg btn-block btn-disabled">사용자가 생성한 그룹</button><br>
+                <a href="/find/group/edit/<%= params[:group_id] %>"><button class="btn btn-lg btn-block btn-embossed btn-disabled">그룹 수정</button></a><br>
+                <%= button_to "그룹 삭제", "/find/group/destroy/"+params[:group_id], {data: { confirm: "그룹을 삭제합니다. 진행하시겠습니까?" }, method: :post, class:"btn btn-lg btn-block btn-primary", params:{group_id: params[:group_id]}} %>
+            <% elsif @signed == "not_user" then %>
+                <button class="btn btn-lg btn-block btn-disabled">카페 주인 계정은 그룹 생성/가입 등이 불가합니다.</button>
+            <% else %>
+                <% if @signed == false then %>
+                    <% if @group.member == 0 then %>
+                        <button class="btn btn-lg btn-block btn-disabled">그룹 가입 마감</button>
+                    <% else %>
+                        <%= button_to "그룹 가입", "/find/group/apply/"+params[:group_id], {method: :post, class:"btn btn-lg btn-block btn-primary", params:{group_id: params[:group_id]}} %>
+                    <% end %>
+                <% else %>
+                    <button class="btn btn-lg btn-block btn-disabled">이미 가입된 그룹</button><br>
+                    <%= button_to "그룹 탈퇴", "/find/group/destroy/"+params[:group_id], {data: { confirm: "그룹을 탈퇴합니다. 진행하시겠습니까?" },method: :post, class:"btn btn-lg btn-block btn-primary", params:{group_id: params[:group_id]}} %>
+                <% end %>
+            <% end %>
+            <hr>
+        </div>
+    </div>
+</main>

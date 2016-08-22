@@ -1,0 +1,455 @@
+<%= render 'home/navbar' %>
+<!-- 시간표 설정 페이지 -->
+<main>
+    <div class="row container">
+        <div class="four columns">
+            <h1>시간표 생성</h1>
+            <hr>
+            <!--MODIFY TIMETABLE INFO-->
+            <fieldset class="tile">
+                <h4>시간 추가</h4>
+                <hr>
+                <select id="type" class="form-control select select-primary select-block mbl" onchange="timetable_selection(this.value)">
+                    <optgroup label="일정 타입 선택">
+                        <option value="1" selected>알파벳 교시</option>
+                        <option value="2">숫자 교시</option>
+                    </optgroup>
+    			</select>
+                <br>
+                <select id="day" class="form-control select select-primary select-block mbl">
+                    <optgroup label="요일 선택">
+                        <option value="1" selected>월요일</option>
+                        <option value="2">화요일</option>
+                        <option value="3">수요일</option>
+                        <option value="4">목요일</option>
+                        <option value="5">금요일</option>
+                    </optgroup>
+                </select>
+                <br>
+                <select id="start" class="form-control select select-primary select-block mbl">
+                  <optgroup label="시작 시간">
+                    <option value="1" selected>A교시</option>
+                    <option value="2">B교시</option>
+                    <option value="3">C교시</option>
+                    <option value="4">D교시</option>
+                    <option value="5">E교시</option>
+                    <option value="6">F교시</option>
+                    <option value="7">G교시</option>
+                    <option value="8">H교시</option>
+                  </optgroup>
+                </select>부터
+    			<br>
+                <select id="end" class="form-control select select-primary select-block mbl">
+                    <optgroup label="종료 시간">
+                        <option value="1" selected>A교시</option>
+                        <option value="2">B교시</option>
+                        <option value="3">C교시</option>
+                        <option value="4">D교시</option>
+                        <option value="5">E교시</option>
+                        <option value="6">F교시</option>
+                        <option value="7">G교시</option>
+                        <option value="8">H교시</option>
+                    </optgroup>
+                </select>까지
+                <br>
+                <hr>
+                <input type="button" class="btn btn-lg btn-block btn-success" value="추가" onClick="addTimetableEvent();">
+            </fieldset>
+        </div>
+        <div class="eight columns">
+            <div class="tip" align="center">
+                아래 표를 통해 저장할 일정표를 미리 확인하실 수 있습니다. 변경은 불가능합니다.
+            </div>
+            <hr>
+            <%= form_tag("/mypage/timetable/edit", method:"POST") do %>
+                <table class="timetable">
+                    <thead>
+                        <tr>
+                            <th>알파벳 시간</th>
+                            <th class="weekday">월</th>
+                            <th class="weekday">화</th>
+                            <th class="weekday">수</th>
+                            <th class="weekday">목</th>
+                            <th class="weekday">금</th>
+                            <th>시간</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="5">A</td>
+                            <td class="time td_1_1_1 td_1_1_2"><input class="schedule check_1_1_1 check_1_1_2" name="mon[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_1_1 td_2_1_2"><input class="schedule check_2_1_1 check_2_1_2" name="tue[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_1_1 td_3_1_2"><input class="schedule check_3_1_1 check_3_1_2" name="wed[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_1_1 td_4_1_2"><input class="schedule check_4_1_1 check_4_1_2" name="thu[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_1_1 td_5_1_2"><input class="schedule check_5_1_1 check_5_1_2" name="fri[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td rowspan="4">오전 9시<br>1교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_1_1 td_1_1_2"><input class="schedule check_1_1_1 check_1_1_2" name="mon[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_1_1 td_2_1_2"><input class="schedule check_2_1_1 check_2_1_2" name="tue[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_1_1 td_3_1_2"><input class="schedule check_3_1_1 check_3_1_2" name="wed[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_1_1 td_4_1_2"><input class="schedule check_4_1_1 check_4_1_2" name="thu[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_1_1 td_5_1_2"><input class="schedule check_5_1_1 check_5_1_2" name="fri[time_09][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_1_1 td_1_1_2"><input class="schedule check_1_1_1 check_1_1_2" name="mon[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_1_1 td_2_1_2"><input class="schedule check_2_1_1 check_2_1_2" name="tue[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_1_1 td_3_1_2"><input class="schedule check_3_1_1 check_3_1_2" name="wed[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_1_1 td_4_1_2"><input class="schedule check_4_1_1 check_4_1_2" name="thu[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_1_1 td_5_1_2"><input class="schedule check_5_1_1 check_5_1_2" name="fri[time_09][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_1_1 td_1_1_2"><input class="schedule check_1_1_1 check_1_1_2" name="mon[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_1_1 td_2_1_2"><input class="schedule check_2_1_1 check_2_1_2" name="tue[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_1_1 td_3_1_2"><input class="schedule check_3_1_1 check_3_1_2" name="wed[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_1_1 td_4_1_2"><input class="schedule check_4_1_1 check_4_1_2" name="thu[time_09][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_1_1 td_5_1_2"><input class="schedule check_5_1_1 check_5_1_2" name="fri[time_09][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_1_1 td_1_2_2"><input class="schedule check_1_1_1 check_1_2_2" name="mon[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_1_1 td_2_2_2"><input class="schedule check_2_1_1 check_2_2_2" name="tue[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_1_1 td_3_2_2"><input class="schedule check_3_1_1 check_3_2_2" name="wed[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_1_1 td_4_2_2"><input class="schedule check_4_1_1 check_4_2_2" name="thu[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_1_1 td_5_2_2"><input class="schedule check_5_1_1 check_5_2_2" name="fri[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td rowspan="4">오전 10시<br>2교시</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_2_2"><input class="schedule check_1_2_2" name="mon[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_2"><input class="schedule check_2_2_2" name="tue[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_2"><input class="schedule check_3_2_2" name="wed[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_2"><input class="schedule check_4_2_2" name="thu[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_2"><input class="schedule check_5_2_2" name="fri[time_10][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">B</td>
+                            <td class="time td_1_2_1 td_1_2_2"><input class="schedule check_1_2_1 check_1_2_2" name="mon[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_1 td_2_2_2"><input class="schedule check_2_2_1 check_2_2_2" name="tue[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_1 td_3_2_2"><input class="schedule check_3_2_1 check_3_2_2" name="wed[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_1 td_4_2_2"><input class="schedule check_4_2_1 check_4_2_2" name="thu[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_1 td_5_2_2"><input class="schedule check_5_2_1 check_5_2_2" name="fri[time_10][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_2_1 td_1_2_2"><input class="schedule check_1_2_1 check_1_2_2" name="mon[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_1 td_2_2_2"><input class="schedule check_2_2_1 check_2_2_2" name="tue[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_1 td_3_2_2"><input class="schedule check_3_2_1 check_3_2_2" name="wed[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_1 td_4_2_2"><input class="schedule check_4_2_1 check_4_2_2" name="thu[time_10][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_1 td_5_2_2"><input class="schedule check_5_2_1 check_5_2_2" name="fri[time_10][]" type="number" min="1" max="2" value="1"></td>
+                        </tr> 
+                        <tr> 
+                            <td class="time td_1_2_1 td_1_3_2"><input class="schedule check_1_2_1 check_1_3_2" name="mon[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_1 td_2_3_2"><input class="schedule check_2_2_1 check_2_3_2" name="tue[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_1 td_3_3_2"><input class="schedule check_3_2_1 check_3_3_2" name="wed[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_1 td_4_3_2"><input class="schedule check_4_2_1 check_4_3_2" name="thu[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_1 td_5_3_2"><input class="schedule check_5_2_1 check_5_3_2" name="fri[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td rowspan="4">오전 11시<br>3교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_2_1 td_1_3_2"><input class="schedule check_1_2_1 check_1_3_2" name="mon[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_1 td_2_3_2"><input class="schedule check_2_2_1 check_2_3_2" name="tue[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_1 td_3_3_2"><input class="schedule check_3_2_1 check_3_3_2" name="wed[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_1 td_4_3_2"><input class="schedule check_4_2_1 check_4_3_2" name="thu[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_1 td_5_3_2"><input class="schedule check_5_2_1 check_5_3_2" name="fri[time_11][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_2_1 td_1_3_2"><input class="schedule check_1_2_1 check_1_3_2" name="mon[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_2_2_1 td_2_3_2"><input class="schedule check_2_2_1 check_2_3_2" name="tue[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_3_2_1 td_3_3_2"><input class="schedule check_3_2_1 check_3_3_2" name="wed[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_4_2_1 td_4_3_2"><input class="schedule check_4_2_1 check_4_3_2" name="thu[time_11][]" type="number" min="1" max="2" value="1"></td>
+                            <td class="time td_5_2_1 td_5_3_2"><input class="schedule check_5_2_1 check_5_3_2" name="fri[time_11][]" type="number" min="1" max="2" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_3_2"><input class="schedule check_1_3_2" name="mon[time_11][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_2"><input class="schedule check_2_3_2" name="tue[time_11][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_2"><input class="schedule check_3_3_2" name="wed[time_11][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_2"><input class="schedule check_4_3_2" name="thu[time_11][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_2"><input class="schedule check_5_3_2" name="fri[time_11][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">C</td>
+                            <td class="time td_1_3_1 td_1_4_2"><input class="schedule check_1_3_1 check_1_4_2" name="mon[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_1 td_2_4_2"><input class="schedule check_2_3_1 check_2_4_2" name="tue[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_1 td_3_4_2"><input class="schedule check_3_3_1 check_3_4_2" name="wed[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_1 td_4_4_2"><input class="schedule check_4_3_1 check_4_4_2" name="thu[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_1 td_5_4_2"><input class="schedule check_5_3_1 check_5_4_2" name="fri[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 12시<br>4교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_3_1 td_1_4_2"><input class="schedule check_1_3_1 check_1_4_2" name="mon[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_1 td_2_4_2"><input class="schedule check_2_3_1 check_2_4_2" name="tue[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_1 td_3_4_2"><input class="schedule check_3_3_1 check_3_4_2" name="wed[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_1 td_4_4_2"><input class="schedule check_4_3_1 check_4_4_2" name="thu[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_1 td_5_4_2"><input class="schedule check_5_3_1 check_5_4_2" name="fri[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_3_1 td_1_4_2"><input class="schedule check_1_3_1 check_1_4_2" name="mon[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_1 td_2_4_2"><input class="schedule check_2_3_1 check_2_4_2" name="tue[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_1 td_3_4_2"><input class="schedule check_3_3_1 check_3_4_2" name="wed[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_1 td_4_4_2"><input class="schedule check_4_3_1 check_4_4_2" name="thu[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_1 td_5_4_2"><input class="schedule check_5_3_1 check_5_4_2" name="fri[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_3_1 td_1_4_2"><input class="schedule check_1_3_1 check_1_4_2" name="mon[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_1 td_2_4_2"><input class="schedule check_2_3_1 check_2_4_2" name="tue[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_1 td_3_4_2"><input class="schedule check_3_3_1 check_3_4_2" name="wed[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_1 td_4_4_2"><input class="schedule check_4_3_1 check_4_4_2" name="thu[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_1 td_5_4_2"><input class="schedule check_5_3_1 check_5_4_2" name="fri[time_12][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_3_1 td_1_5_2"><input class="schedule check_1_3_1 check_1_5_2" name="mon[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_3_1 td_2_5_2"><input class="schedule check_2_3_1 check_2_5_2" name="tue[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_3_1 td_3_5_2"><input class="schedule check_3_3_1 check_3_5_2" name="wed[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_3_1 td_4_5_2"><input class="schedule check_4_3_1 check_4_5_2" name="thu[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_3_1 td_5_5_2"><input class="schedule check_5_3_1 check_5_5_2" name="fri[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 1시<br>5교시</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_5_2"><input class="schedule check_1_5_2" name="mon[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_2"><input class="schedule check_2_5_2" name="tue[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_2"><input class="schedule check_3_5_2" name="wed[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_2"><input class="schedule check_4_5_2" name="thu[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_2"><input class="schedule check_5_5_2" name="fri[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">D</td>
+                            <td class="time td_1_4_1 td_1_5_2"><input class="schedule check_1_4_1 check_1_5_2" name="mon[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_4_1 td_2_5_2"><input class="schedule check_2_4_1 check_2_5_2" name="tue[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_4_1 td_3_5_2"><input class="schedule check_3_4_1 check_3_5_2" name="wed[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_4_1 td_4_5_2"><input class="schedule check_4_4_1 check_4_5_2" name="thu[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_4_1 td_5_5_2"><input class="schedule check_5_4_1 check_5_5_2" name="fri[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                       <tr>
+                            <td class="time td_1_4_1 td_1_5_2"><input class="schedule check_1_4_1 check_1_5_2" name="mon[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_4_1 td_2_5_2"><input class="schedule check_2_4_1 check_2_5_2" name="tue[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_4_1 td_3_5_2"><input class="schedule check_3_4_1 check_3_5_2" name="wed[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_4_1 td_4_5_2"><input class="schedule check_4_4_1 check_4_5_2" name="thu[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_4_1 td_5_5_2"><input class="schedule check_5_4_1 check_5_5_2" name="fri[time_13][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_4_1 td_1_6_2"><input class="schedule check_1_4_1 check_1_6_2" name="mon[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_4_1 td_2_6_2"><input class="schedule check_2_4_1 check_2_6_2" name="tue[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_4_1 td_3_6_2"><input class="schedule check_3_4_1 check_3_6_2" name="wed[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_4_1 td_4_6_2"><input class="schedule check_4_4_1 check_4_6_2" name="thu[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_4_1 td_5_6_2"><input class="schedule check_5_4_1 check_5_6_2" name="fri[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 2시<br>6교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_4_1 td_1_6_2"><input class="schedule check_1_4_1 check_1_6_2" name="mon[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_4_1 td_2_6_2"><input class="schedule check_2_4_1 check_2_6_2" name="tue[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_4_1 td_3_6_2"><input class="schedule check_3_4_1 check_3_6_2" name="wed[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_4_1 td_4_6_2"><input class="schedule check_4_4_1 check_4_6_2" name="thu[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_4_1 td_5_6_2"><input class="schedule check_5_4_1 check_5_6_2" name="fri[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                       <tr>
+                            <td class="time td_1_4_1 td_1_6_2"><input class="schedule check_1_4_1 check_1_6_2" name="mon[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_4_1 td_2_6_2"><input class="schedule check_2_4_1 check_2_6_2" name="tue[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_4_1 td_3_6_2"><input class="schedule check_3_4_1 check_3_6_2" name="wed[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_4_1 td_4_6_2"><input class="schedule check_4_4_1 check_4_6_2" name="thu[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_4_1 td_5_6_2"><input class="schedule check_5_4_1 check_5_6_2" name="fri[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_6_2"><input class="schedule check_1_6_2" name="mon[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_2"><input class="schedule check_2_6_2" name="tue[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_2"><input class="schedule check_3_6_2" name="wed[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_2"><input class="schedule check_4_6_2" name="thu[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_2"><input class="schedule check_5_6_2" name="fri[time_14][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">E</td>
+                            <td class="time td_1_5_1 td_1_7_2"><input class="schedule check_1_5_1 check_1_7_2" name="mon[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_1 td_2_7_2"><input class="schedule check_2_5_1 check_2_7_2" name="tue[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_1 td_3_7_2"><input class="schedule check_3_5_1 check_3_7_2" name="wed[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_1 td_4_7_2"><input class="schedule check_4_5_1 check_4_7_2" name="thu[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_1 td_5_7_2"><input class="schedule check_5_5_1 check_5_7_2" name="fri[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 3시<br>7교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_5_1 td_1_7_2"><input class="schedule check_1_5_1 check_1_7_2" name="mon[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_1 td_2_7_2"><input class="schedule check_2_5_1 check_2_7_2" name="tue[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_1 td_3_7_2"><input class="schedule check_3_5_1 check_3_7_2" name="wed[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_1 td_4_7_2"><input class="schedule check_4_5_1 check_4_7_2" name="thu[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_1 td_5_7_2"><input class="schedule check_5_5_1 check_5_7_2" name="fri[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_5_1 td_1_7_2"><input class="schedule check_1_5_1 check_1_7_2" name="mon[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_1 td_2_7_2"><input class="schedule check_2_5_1 check_2_7_2" name="tue[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_1 td_3_7_2"><input class="schedule check_3_5_1 check_3_7_2" name="wed[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_1 td_4_7_2"><input class="schedule check_4_5_1 check_4_7_2" name="thu[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_1 td_5_7_2"><input class="schedule check_5_5_1 check_5_7_2" name="fri[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_5_1 td_1_7_2"><input class="schedule check_1_5_1 check_1_7_2" name="mon[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_1 td_2_7_2"><input class="schedule check_2_5_1 check_2_7_2" name="tue[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_1 td_3_7_2"><input class="schedule check_3_5_1 check_3_7_2" name="wed[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_1 td_4_7_2"><input class="schedule check_4_5_1 check_4_7_2" name="thu[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_1 td_5_7_2"><input class="schedule check_5_5_1 check_5_7_2" name="fri[time_15][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_5_1 td_1_8_2"><input class="schedule check_1_5_1 check_1_8_2" name="mon[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_5_1 td_2_8_2"><input class="schedule check_2_5_1 check_2_8_2" name="tue[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_5_1 td_3_8_2"><input class="schedule check_3_5_1 check_3_8_2" name="wed[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_5_1 td_4_8_2"><input class="schedule check_4_5_1 check_4_8_2" name="thu[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_5_1 td_5_8_2"><input class="schedule check_5_5_1 check_5_8_2" name="fri[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 4시<br>8교시</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_8_2"><input class="schedule check_1_8_2" name="mon[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_8_2"><input class="schedule check_2_8_2" name="tue[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_8_2"><input class="schedule check_3_8_2" name="wed[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_8_2"><input class="schedule check_4_8_2" name="thu[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_8_2"><input class="schedule check_5_8_2" name="fri[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">F</td>
+                            <td class="time td_1_6_1 td_1_8_2"><input class="schedule check_1_6_1 check_1_8_2" name="mon[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_1 td_2_8_2"><input class="schedule check_2_6_1 check_2_8_2" name="tue[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_1 td_3_8_2"><input class="schedule check_3_6_1 check_3_8_2" name="wed[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_1 td_4_8_2"><input class="schedule check_4_6_1 check_4_8_2" name="thu[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_1 td_5_8_2"><input class="schedule check_5_6_1 check_5_8_2" name="fri[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_6_1 td_1_8_2"><input class="schedule check_1_6_1 check_1_8_2" name="mon[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_1 td_2_8_2"><input class="schedule check_2_6_1 check_2_8_2" name="tue[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_1 td_3_8_2"><input class="schedule check_3_6_1 check_3_8_2" name="wed[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_1 td_4_8_2"><input class="schedule check_4_6_1 check_4_8_2" name="thu[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_1 td_5_8_2"><input class="schedule check_5_6_1 check_5_8_2" name="fri[time_16][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_6_1 td_1_9_2"><input class="schedule check_1_6_1 check_1_9_2" name="mon[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_1 td_2_9_2"><input class="schedule check_2_6_1 check_2_9_2" name="tue[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_1 td_3_9_2"><input class="schedule check_3_6_1 check_3_9_2" name="wed[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_1 td_4_9_2"><input class="schedule check_4_6_1 check_4_9_2" name="thu[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_1 td_5_9_2"><input class="schedule check_5_6_1 check_5_9_2" name="fri[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 5시<br>9교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_6_1 td_1_9_2"><input class="schedule check_1_6_1 check_1_9_2" name="mon[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_1 td_2_9_2"><input class="schedule check_2_6_1 check_2_9_2" name="tue[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_1 td_3_9_2"><input class="schedule check_3_6_1 check_3_9_2" name="wed[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_1 td_4_9_2"><input class="schedule check_4_6_1 check_4_9_2" name="thu[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_1 td_5_9_2"><input class="schedule check_5_6_1 check_5_9_2" name="fri[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_6_1 td_1_9_2"><input class="schedule check_1_6_1 check_1_9_2" name="mon[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_6_1 td_2_9_2"><input class="schedule check_2_6_1 check_2_9_2" name="tue[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_6_1 td_3_9_2"><input class="schedule check_3_6_1 check_3_9_2" name="wed[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_6_1 td_4_9_2"><input class="schedule check_4_6_1 check_4_9_2" name="thu[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_6_1 td_5_9_2"><input class="schedule check_5_6_1 check_5_9_2" name="fri[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td class="time td_1_9_2"><input class="schedule check_1_9_2" name="mon[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_9_2"><input class="schedule check_2_9_2" name="tue[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_9_2"><input class="schedule check_3_9_2" name="wed[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_9_2"><input class="schedule check_4_9_2" name="thu[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_9_2"><input class="schedule check_5_9_2" name="fri[time_17][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="5">G</td>
+                            <td class="time td_1_7_1 td_1_10_2"><input class="schedule check_1_7_1 check_1_10_2" name="mon[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_7_1 td_2_10_2"><input class="schedule check_2_7_1 check_2_10_2" name="tue[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_7_1 td_3_10_2"><input class="schedule check_3_7_1 check_3_10_2" name="wed[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_7_1 td_4_10_2"><input class="schedule check_4_7_1 check_4_10_2" name="thu[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_7_1 td_5_10_2"><input class="schedule check_5_7_1 check_5_10_2" name="fri[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 6시<br>10교시</td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_7_1 td_1_10_2"><input class="schedule check_1_7_1 check_1_10_2" name="mon[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_7_1 td_2_10_2"><input class="schedule check_2_7_1 check_2_10_2" name="tue[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_7_1 td_3_10_2"><input class="schedule check_3_7_1 check_3_10_2" name="wed[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_7_1 td_4_10_2"><input class="schedule check_4_7_1 check_4_10_2" name="thu[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_7_1 td_5_10_2"><input class="schedule check_5_7_1 check_5_10_2" name="fri[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_7_1 td_1_10_2"><input class="schedule check_1_7_1 check_1_10_2" name="mon[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_7_1 td_2_10_2"><input class="schedule check_2_7_1 check_2_10_2" name="tue[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_7_1 td_3_10_2"><input class="schedule check_3_7_1 check_3_10_2" name="wed[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_7_1 td_4_10_2"><input class="schedule check_4_7_1 check_4_10_2" name="thu[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_7_1 td_5_10_2"><input class="schedule check_5_7_1 check_5_10_2" name="fri[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_7_1 td_1_10_2"><input class="schedule check_1_7_1 check_1_10_2" name="mon[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_7_1 td_2_10_2"><input class="schedule check_2_7_1 check_2_10_2" name="tue[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_7_1 td_3_10_2"><input class="schedule check_3_7_1 check_3_10_2" name="wed[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_7_1 td_4_10_2"><input class="schedule check_4_7_1 check_4_10_2" name="thu[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_7_1 td_5_10_2"><input class="schedule check_5_7_1 check_5_10_2" name="fri[time_18][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                        <tr>
+                            <td class="time td_1_7_1 td_1_10_2"><input class="schedule check_1_7_1 check_1_10_2" name="mon[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_7_1 td_2_10_2"><input class="schedule check_2_7_1 check_2_10_2" name="tue[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_7_1 td_3_10_2"><input class="schedule check_3_7_1 check_3_10_2" name="wed[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_7_1 td_4_10_2"><input class="schedule check_4_7_1 check_4_10_2" name="thu[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_7_1 td_5_10_2"><input class="schedule check_5_7_1 check_5_10_2" name="fri[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td rowspan="4">오후 7시<br>10교시</td>
+                        </tr>
+                         <tr>
+                            <td>-</td>
+                            <td class="time td_1_10_2"><input class="schedule check_1_10_2" name="mon[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_10_2"><input class="schedule check_2_10_2" name="tue[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_10_2"><input class="schedule check_3_10_2" name="wed[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_10_2"><input class="schedule check_4_10_2" name="thu[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_10_2"><input class="schedule check_5_10_2" name="fri[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                         <tr>
+                            <td rowspan="2">H</td>
+                            <td class="time td_1_8_1 td_1_10_2"><input class="schedule check_1_8_1 check_1_10_2" name="mon[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_8_1 td_2_10_2"><input class="schedule check_2_8_1 check_2_10_2" name="tue[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_8_1 td_3_10_2"><input class="schedule check_3_8_1 check_3_10_2" name="wed[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_8_1 td_4_10_2"><input class="schedule check_4_8_1 check_4_10_2" name="thu[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_8_1 td_5_10_2"><input class="schedule check_5_8_1 check_5_10_2" name="fri[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                         <tr>
+                            <td class="time td_1_8_1 td_1_10_2"><input class="schedule check_1_8_1 check_1_10_2" name="mon[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_2_8_1 td_2_10_2"><input class="schedule check_2_8_1 check_2_10_2" name="tue[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_3_8_1 td_3_10_2"><input class="schedule check_3_8_1 check_3_10_2" name="wed[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_4_8_1 td_4_10_2"><input class="schedule check_4_8_1 check_4_10_2" name="thu[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                            <td class="time td_5_8_1 td_5_10_2"><input class="schedule check_5_8_1 check_5_10_2" name="fri[time_19][]" type="number" min="1" max="2" value="1" ></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <input type="submit" class="btn btn-lg btn-block btn-success" value="생성">
+            <% end %>
+        </div>
+    </div>
+</main>
+
+<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>

@@ -1,0 +1,59 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <h4>팀플 장소 찾기</h4>
+                <hr>
+                <%= form_tag("/find/place/search", method: "POST", class:"todo-search") do %>
+                    <%= search_field_tag 'query', nil, class:"todo-search-field", value: params[:query], placeholder:"Search" %>
+                <% end %>
+            </div>
+            <div class="nine columns">
+                <h5><div id="sr_title"></div></h5>
+                <hr>
+                <div class="container">
+                    <% if @result.count == 0 then %>
+                        <h5>검색 결과가 존재하지 않습니다.</h5>
+                    <% end %>
+                    <% i = 1 %>
+                    <% @result.each do |place| %>
+                        <% if i % 2 == 1 then %>
+                        <div class="row">
+                            <div class="tile six columns">
+                                <h5 class="placeTitle"><%= place.name %></h5>
+                                <p class="placeContent"><%= place.content %></p>
+                                <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-default">자세히</button></a>
+                            </div>
+                        <% else %>
+                            <div class="tile six columns">
+                                <h5 class="placeTitle"><%= place.name %></h5>
+                                <p class="placeContent"><%= place.content %></p>
+                                <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-default">자세히</button></a>
+                            </div>
+                        </div>
+                        <% end %>
+                    <% end %>
+                </div>
+                <div class="pagination-wrapper" align="center">
+                    <% unless @result.count == 0 then %>
+                        <%= will_paginate @result %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+      var theater = theaterJS();
+        theater.on('type:start, erase:start', function () {
+            theater.getCurrentActor().$element.classList.add('actor__content--typing');
+        }).on('type:end, erase:end', function () {
+            theater.getCurrentActor().$element.classList.remove('actor__content--typing');
+        });
+        
+        theater
+        .addActor('sr_title')
+        .addScene('sr_title:<%= params[:query] %>에 대한 검색결과입니다.', 1000)
+        .addScene(theater.replay.bind(theater));
+</script>

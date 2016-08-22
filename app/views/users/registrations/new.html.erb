@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="/">SERVICE NAME</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-01">
+      <p class="navbar-text navbar-right">로그인이 필요합니다.</p>
+    </div><!-- /.navbar-collapse -->
+</nav>
+<main>
+  <div class="valign-wrapper">
+    <div class="login valign">
+    <h2>학생 회원가입</h2>
+    <blockquote>
+      <%= devise_error_messages! %>
+    </blockquote>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "login-form"}) do |f| %>
+      <div class="form-group">
+        <%= f.label :email, "이메일" %><br />
+        <%= f.email_field :email, autofocus: true, class:"form-control" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password, "패스워드" %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
+      </div>
+    
+      <div class="form-group">
+        <%= f.label :password_confirmation, "패스워드 재확인" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
+      </div>
+      
+    
+      <div class="form-group">
+        <%= f.label :phone_number, "연락처" %><br />
+        <%= f.text_field :phone, class:"form-control" %>
+      </div>
+      
+      <div class="actions">
+        <%= f.submit "가입", class:"btn btn-primary btn-lg btn-block btn-embossed" %>
+      </div>
+    <% end %>
+    
+    <%= render "users/shared/links" %>
+    </div>
+  </div>
+</main>

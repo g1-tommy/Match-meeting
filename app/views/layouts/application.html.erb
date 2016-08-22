@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SERVICE NAME</title>
+  <script src='//code.jquery.com/jquery-latest.min.js' type='text/javascript'></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <script src='//cdn.jsdelivr.net/theaterjs/latest/theater.min.js'></script>
+  <script src="//cdn.jsdelivr.net/scrollreveal.js/3.3.1/scrollreveal.min.js"></script>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body>
+  <div class="loading">Loading&#8230;</div>
+  <%= yield %>
+  <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-7">
+            <h3 class="footer-title"><img src="http://likelion.org/assets/likelion_text-b7b5aed6954af442181e1a7b82bf265963638a731bcfd839f343845c28a0947f.png" width="30%"></h3>
+            <p>
+              아주대학교 멋쟁이사자처럼<br/><hr>
+              김경림, 김재현, 강윤정, 전지원 팀<br/><hr>
+              Go to: <a href="//www.aulikelion.xyz" target="_blank">아주대학교 멋쟁이사자처럼</a>
+            </p>
+          </div> <!-- /col-xs-7 -->
+
+          <div class="col-xs-12 col-sm-5">
+            <div class="footer-banner">
+              <h3 class="footer-title">SERVICE NAME</h3>
+              <ul>
+                <li>팀플 그룹 생성, 모임 장소 예약</li>
+                <li>팀플 가능 시간 추천</li>
+              </ul>
+              Go to: <a href="//www.aulikelion.xyz" target="_blank">아주대학교 멋쟁이사자처럼</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+</body>
+</html>

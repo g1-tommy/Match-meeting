@@ -1,0 +1,54 @@
+<nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="/">SERVICE NAME</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-01">
+      <p class="navbar-text navbar-right">
+          <% flash.each do |key, value| %>
+              <%= value %>
+          <% end %>
+      </p>
+    </div><!-- /.navbar-collapse -->
+</nav>
+<main class="session">
+    <div class="valign-wrapper">
+        <div class="valign">
+            <h1 id="welcome"></h1>
+            <small id="desc"></small>
+            <hr>
+            <% unless params.has_key?(:new) && params[:new] == 'true' then %>
+                <section>
+                    <a href="<%= new_user_session_path %>"><button class="btn btn-lg btn-block btn-primary btn_embossed">학생</button></a><br>
+                    <a href="<%= new_owner_session_path %>"><button class="btn btn-lg btn-block btn-success btn_embossed">카페 주인</button></a>
+                    <hr>
+                    만약 회원이 아니시면, 회원가입 후에 서비스를 이용하실 수 있습니다.<br><br>
+                    <%= button_to "회원가입", "/login", {method: :post, params:{new: true}, class:"btn btn-hg btn-block btn-info btn-embossed"} %>
+                </section>
+            <% else %>
+                <section>
+                    <a href="<%= new_user_registration_path %>"><button class="btn btn-lg btn-block btn-primary btn_embossed">학생</button></a><br>
+                    <a href="<%= new_owner_registration_path %>"><button class="btn btn-lg btn-block btn-success btn_embossed">카페 주인</button></a>
+                </section>
+            <% end %>
+            <hr>
+        </div>
+    </div>
+</main>
+<script>
+      var theater = theaterJS();
+        theater.on('type:start, erase:start', function () {
+            theater.getCurrentActor().$element.classList.add('actor__content--typing');
+        }).on('type:end, erase:end', function () {
+            theater.getCurrentActor().$element.classList.remove('actor__content--typing');
+        });
+        
+        theater
+        .addActor('welcome')
+        .addActor('desc')
+        .addScene('welcome:환영합니다.', 600)
+        .addScene('desc:회원 유형을 선택하여주세요.', 400)
+        .addScene(theater.replay.bind(theater));
+</script>

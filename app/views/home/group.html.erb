@@ -1,0 +1,51 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <h4>그룹 찾기</h4>
+                <hr>
+                <section>
+                    <span><b>검색</b></span><br>
+                    <%= form_tag("/find/group/search", method: "POST", class:"todo-search") do %>
+                        <%= search_field_tag 'query', nil, class:"todo-search-field", placeholder:"Search" %>
+                    <% end %>
+                </section>
+            </div>
+            <div class="nine columns">
+                <h5>팀플 그룹 목록</h5>
+                <hr>
+                <div class="container">
+                        <% if @group.count == 0 then %>
+                            <header><h4>모집 중인 그룹이 없습니다.</h4></header>
+                        <% else %>
+                            <% i = 1 %>
+                            <% @group.each do |g| %>
+                                <% if i % 2 == 1 then %>
+                                <div class="row">
+                                    <div class="tile six columns">
+                                        <h5 class="groupTitle"><%= g.name %></h5>
+                                        <p class="groupContent"><%= g.content %></p>
+                                        <a href="/find/group/detail/<%= g.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
+                                    </div>
+                                <% else %>
+                                    <div class="tile six columns">
+                                        <h5 class="groupTitle"><%= g.name %></h5>
+                                        <p class="groupContent"><%= g.content %></p>
+                                        <a href="/find/group/detail/<%= g.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
+                                    </div>
+                                </div>
+                                <% end %>
+                                <% i = i + 1 %>
+                            <% end %>
+                        <% end %>
+                </div>
+                <div class="pagination-wrapper" align="center">
+                    <% unless @group.count == 0 then %>
+                        <%= will_paginate @group %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

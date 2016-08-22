@@ -1,0 +1,12 @@
+<section>
+    <!--OWNER CREATED PLACE INFORMATION AREA-->
+    <h5 id="reserved">예약자 정보</h5>
+        <ul>
+            <li class="tagsinput">
+                <% Reservation.where(place_id: Place.where(creator: current_owner.email).first).each do |data| %>
+                    <a class="tag" href="/find/group/detail/<%= data.group_id %>"><%= Group.find(data.group_id).creator %></a>
+                <% end %>
+            </li>
+        </ul>
+    <a href="/find/place/edit/<%= Place.where(creator: current_owner.email).first.id %>"><button class="btn btn-lg btn-block btn-primary">등록한 장소 정보 변경</button></a>
+</section>

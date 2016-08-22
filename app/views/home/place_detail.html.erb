@@ -1,0 +1,36 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <h3><%= @place.name %></h3>
+                <%=@place.likes%>명이 좋아합니다.
+                <hr>
+                <span><b>위치</b></span><br>
+                <%= @place.location %><br>
+                <iframe width="100%" height=auto frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?q=<%= @place.location %>&key=AIzaSyBO67biQvnS3Bz6Ye9lUMD8s6e93OWZXTs" allowfullscreen></iframe>
+                <hr>
+                <span><b>영업 시간</b></span><br>
+                <%= @place.open %>시부터 <%= @place.close %>시까지
+            </div>
+            <div class="nine columns">
+                <h5>장소 상세</h5>
+                <hr>
+                <p>
+                    <%= @place.content %>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <% unless owner_signed_in? then %>
+            <hr>
+            <%= button_to "해당일에 장소 예약", "/find/place/apply/before", {method: :post, params:{place_id: params[:place_id]}, class:"btn btn-lg btn-block btn-primary"} %>
+            <% end %>
+            <hr>
+            <% if @creator == true then %>
+                <%= link_to "장소 수정", "/find/place/edit/"+params[:place_id], class:"btn btn-lg btn-warning btn-embossed btn-block" %><br>
+                <%= button_to "장소 삭제", "/find/place/destroy/"+params[:place_id], {method: :post, class:"btn btn-lg btn-danger btn-embossed btn-block"} %>
+            <% end %>
+        </div>
+    </div>
+</main>

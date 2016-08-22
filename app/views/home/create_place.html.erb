@@ -1,0 +1,107 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="four columns">
+                <h3>장소 생성</h3>
+                <hr>
+                <span>팀프로젝트 장소를 찾는 대학생들을 위해 카페 주인 여러분들이 직접 매장에 대한 정보를 등록하시면, 학생들은 이를 확인한 후 예약하여 해당 시간에 맞게 모여 매장에서 팀프로젝트 활동을 진행할 수 있게됩니다.</span>
+            </div>
+            <div class="eight columns">
+                 <%= form_tag("/create/place", method:"POST") do %>
+                    <fieldset>
+                        <h5>생성할 장소의 정보를 입력하여주세요.</h5>
+                        <% flash.each do |key, value| %>
+				        <div class="row">
+				            <div class="tip <%= key %>" align="center"><%= value %></div>
+				        </div>
+				        <% end %>
+                    </fieldset>
+                    <hr>
+                    <span class="input input--nariko">
+                        <label class="input__label input__label--nariko" for="name">
+                            <span class="input__label-content input__label-content--nariko">장소명</span>
+                        </label>
+                        <%= text_field_tag(:name, nil, :required => true, class:"input__field input__field--nariko") %>
+                    </span><br>
+                    <span class="input input--nariko">
+                        <label class="input__label input__label--nariko" for="content">
+                            <span class="input__label-content input__label-content--nariko">장소 상세</span>
+                        </label>
+                        <%= text_field_tag(:content, nil, :required => true, class:"input__field input__field--nariko", placeholder:"간략하게 입력하여주세요") %><br>
+                    </span><br>
+                    <span class="input input--nariko">
+                        <label class="input__label input__label--nariko" for="location">
+                            <span class="input__label-content input__label-content--nariko">장소 위치</span>
+                        </label>
+                        <%= text_field_tag(:location, nil, :required => true, class:"input__field input__field--nariko", placeholder:"ex) 경기도 수원시 팔달구 아주로 2 (우만동)") %><br>
+                    </span>
+                    <p class="tip" data-toggle="tooltip" title="Tooltip copy" align="center">위치를 정확하게 입력하셔야 지도에 올바른 위치가 나타납니다.</p>
+                    <div class="tile">
+                        <h5>장소 미리보기</h5>
+                        <span class="input input--nariko">
+                            <label class="input__label input__label--nariko" for="preview">
+                                <span class="input__label-content input__label-content--nariko">등록할 장소 위치(주소) 입력</span>
+                            </label>
+                            <%= text_field_tag(:preview, nil, class:"input__field input__field--nariko", placeholder:"장소 위치 혹은 키워드") %><br>
+                        </span><br>
+                        <a onClick="previewLoc();" class="btn btn-sm btn-block btn-info">미리보기</a>
+                        <hr>
+                        <div class="locationPreview" align="center"></div>
+                    </div>
+                    <span class="input input--nariko">
+                        <label class="input__label input__label--nariko" for="open">
+                            <span class="input__label-content input__label-content--nariko">오픈 시간</span>
+                        </label>
+                        <%= text_field_tag(:open, nil, :required => true, class:"input__field input__field--nariko", placeholder:"숫자만 입력(24시간제)") %><br>
+                    </span><br>
+                    <div class="tip" align="center">새벽 24시 이후 종료시 종료 시간에 24를 더한 숫자를 입력바랍니다.<br>입력 예) 새벽 1시 종료시 25 입력</div>
+                    <span class="input input--nariko">
+                        <label class="input__label input__label--nariko" for="close">
+                            <span class="input__label-content input__label-content--nariko">종료 시간</span>
+                        </label>
+                        <%= text_field_tag(:close, nil, :required => true, class:"input__field input__field--nariko", placeholder:"숫자만 입력(24시간제)") %><br>
+                    </span>
+                    <hr>
+                    <%= submit_tag("생성", class:"btn btn-lg btn-block btn-primary") %>
+                    <hr>
+                <% end %>
+                <script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+            </div>
+        </div>
+    </div>
+</main>

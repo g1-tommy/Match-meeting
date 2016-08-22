@@ -1,0 +1,82 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <h3>그룹 생성</h3>
+                <hr>
+                <span>팀플 그룹을 생성하는 페이지입니다. 이곳에서 생성할 그룹의 정보(그룹명, 인원 수, 그룹설명)를 입력하면 하나의 그룹이 생성되고, 그룹 상세 페이지에서는 그룹 팀원들의 시간표 분석을 통해 함께 모일 수 있는 시간을 확인하실 수 있으며, 장소 신청을 통해 팀프로젝트를 할 수 있는 장소 확보 또한 가능합니다.</span>
+            </div>
+            <div class="nine columns">
+                <%= form_tag("/create/group", method:"POST") do %>
+                    <fieldset>
+                       <h5>생성할 그룹의 정보를 입력하여주세요.</h5>
+                        <% flash.each do |key, value| %>
+				        <div class="row">
+				            <div class="tip <%= key %>" align="center"><%= value %></div>
+				        </div>
+				        <% end %>
+                    </fieldset>
+                    <hr>
+                    <span class="input input--nariko">
+                    	<label class="input__label input__label--nariko" for="name">
+							<span class="input__label-content input__label-content--nariko">그룹명</span>
+						</label>
+                    	<%= text_field_tag(:name, nil, :required => true, class:"input__field input__field--nariko") %>
+                    </span><br>
+                     <span class="input input--nariko">
+                    	<label class="input__label input__label--nariko" for="content">
+							<span class="input__label-content input__label-content--nariko">그룹 설명</span>
+						</label>
+                    	<%= text_field_tag(:content, nil, :required => true, class:"input__field input__field--nariko", placeholder:"간략하게 입력하여주세요") %>
+                    </span><br>
+                    <span class="input input--nariko">
+                    	<label class="input__label input__label--nariko" for="max">
+							<span class="input__label-content input__label-content--nariko">그룹 최대 인원</span>
+						</label>
+	                    <%= text_field_tag(:max, nil, class:"input__field input__field--nariko", placeholder:"(본인 제외)숫자만 입력, 인원 제한 없음", :required => true) %>
+	                </span><br>
+	                <hr>
+                    <%= submit_tag("생성", class:"btn btn-lg btn-block btn-primary") %>
+                <% end %>
+                
+			<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+                
+            </div>
+        </div>
+    </div>
+</main>

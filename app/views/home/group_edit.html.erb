@@ -1,0 +1,64 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <h3>그룹 수정</h3>
+        <hr>
+        <form method="POST" action="/find/group/edit/<%= params[:group_id] %>">
+            <span class="input input--nariko">
+             	<label class="input__label input__label--nariko" for="name">
+					<span class="input__label-content input__label-content--nariko">그룹명</span>
+				</label>
+             	<%= text_field_tag(:name, @group.name, :required => true, class:"input__field input__field--nariko") %>
+             </span><br>
+              <span class="input input--nariko">
+             	<label class="input__label input__label--nariko" for="content">
+					<span class="input__label-content input__label-content--nariko">그룹 설명</span>
+				</label>
+             	<%= text_field_tag(:content, @group.content, :required => true, class:"input__field input__field--nariko", placeholder:"간략하게 입력하여주세요") %>
+             </span><br>
+             <span class="input input--nariko">
+             	<label class="input__label input__label--nariko" for="max">
+					<span class="input__label-content input__label-content--nariko">그룹 최대 인원</span>
+				</label>
+	             <%= text_field_tag(:max, @group.member + @affiliated, class:"input__field input__field--nariko", placeholder:"(본인 제외)숫자만 입력, 인원 제한 없음", :required => true) %>
+	         </span><br>
+	         <hr>
+            <input type="submit" value="수정" class="btn btn-lg btn-block btn-embossed">
+        </form>
+    </div>
+</main>
+<script>
+(function() {
+	// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+	if (!String.prototype.trim) {
+		(function() {
+			// Make sure we trim BOM and NBSP
+			var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+			String.prototype.trim = function() {
+				return this.replace(rtrim, '');
+			};
+		})();
+	}
+
+	[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+		// in case the input is already filled..
+		if( inputEl.value.trim() !== '' ) {
+			classie.add( inputEl.parentNode, 'input--filled' );
+		}
+
+		// events:
+		inputEl.addEventListener( 'focus', onInputFocus );
+		inputEl.addEventListener( 'blur', onInputBlur );
+	} );
+
+	function onInputFocus( ev ) {
+		classie.add( ev.target.parentNode, 'input--filled' );
+	}
+
+	function onInputBlur( ev ) {
+		if( ev.target.value.trim() === '' ) {
+			classie.remove( ev.target.parentNode, 'input--filled' );
+		}
+	}
+})();
+</script>

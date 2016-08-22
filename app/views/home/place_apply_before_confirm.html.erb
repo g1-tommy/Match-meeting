@@ -1,0 +1,36 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <h3>예약 전 확인</h3>
+        <hr>
+        <section>
+            <h5>예약 전 확인하셔야 할 사항이 있습니다.</h5>
+            <p>
+                이미 동일한 장소에 대한 예약 내역이 있습니다.
+                <% Reservation.where(place_id: params[:place_id], group_id: params[:group_id]).each do |resv| %>
+                    <div class="tile">
+                        <h5><%= Place.find(resv.place_id).name %></h5>
+                        <hr>
+                        예약 그룹명<br>
+                        <b><%= Group.find(resv.group_id).name %></b><br><br>
+                        예약 시간<br>
+                        <b><%= resv.schedule.to_s.split(' ')[0] %> <%= resv.schedule.to_s.split(' ')[1].gsub(":00:00", "") %>시부터 <%= resv.duration.to_s.split(' ')[1].gsub(":00:00", "") %>시까지</b>
+                    </div>
+                <% end %>
+            </p>
+            <hr>
+            <small>그래도 진행하시겠습니까? 계속 진행하시려면 예약 진행 버튼을 눌러주십시오.</small><br><br>
+            <div class="row">
+                <div class="six columns">
+                    <%= button_to "예약 진행", "/find/place/apply", {method: :post, params:{place_id: params[:place_id], group_id: params[:group_id]}, class:"btn btn-lg btn-block btn-warning"} %>
+                    <br>
+                </div>
+                <div class="six columns">
+                    <%= link_to "예약 취소", mypage_path, class:"btn btn-lg btn-block btn-inverse" %>
+                    <br>
+                </div>
+            </div>
+        </section>
+        <hr>
+    </div>
+</main>

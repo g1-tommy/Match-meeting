@@ -1,0 +1,88 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <h4>팀플 장소 찾기</h4>
+                <hr>
+                <section>
+                    <header><b>추천 장소</b></header>
+                    <% if Place.all.count == 0 then %>
+                        <small>추천할 수 있는 장소 데이터가 존재하지 않습니다.</small>
+                    <% else %>
+                        <% Place.all.order("likes DESC limit 1").each do |d| %>
+                        <article class="tile">
+                            <h5><%= d.name %></h5>
+                            <p><%= d.content %></p>
+                             <% if user_signed_in? %>
+                                 <% if Place.find(d.id).who_likes_it.split('|').include? current_user.id.to_s %>
+                                     <% @disabled = 'disabled' %>
+                                 <% else %>
+                                     <% @disabled = '' %>
+                                 <% end %>
+                                 <a class="btn btn-hg btn-warning <%= @disabled %> like"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= d.id %>)">♥ <%= d.likes %></a><hr>
+                             <% end %>
+                            <a href="/find/place/detail/<%= d.id %>"><button class="btn btn-block btn-info btn-embossed">자세히</button></a>
+                        </article>
+                        <% end %>
+                    <% end %>
+                </section>
+                <br>
+                <section>
+                    <span><b>검색</b></span><br>
+                    <%= form_tag("/find/place/search", method: "POST", class:"todo-search") do %>
+                        <%= search_field_tag 'query', nil, class:"todo-search-field", placeholder:"Search" %>
+                    <% end %>
+                </section>
+            </div>
+            <div class="nine columns">
+                <h5>팀플 장소 목록</h5>
+                <hr>
+                <div class="container">
+                    <% if @place.count == 0 then %>
+                        <header><h4>프로젝트를 할 수 있는 장소가 존재하지 않습니다.</h4></header>
+                    <% else %>
+                        <% i = 1 %>
+                        <% @place.each do |place| %>
+                            <% if i % 2 == 1 then %>
+                            <div class="row">
+                                <div class="tile six columns">
+                                    <h5 class="placeTitle"><%= place.name %></h5>
+                                    <p class="placeContent"><%= place.content %></p>
+                                    <div align="center">
+                                        <% if user_signed_in? %>
+                                            <% if Place.find(place.id).who_likes_it.split('|').include? current_user.id.to_s %>
+                                                <% @disabled = 'disabled' %>
+                                            <% else %>
+                                                <% @disabled = '' %>
+                                            <% end %>
+                                            <a class="btn btn-hg btn-warning <%= @disabled %> like"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
+                                        <% end %>
+                                    </div>
+                                    <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
+                                </div>
+                            <% else %>
+                                <div class="tile six columns">
+                                    <h5 class="placeTitle"><%= place.name %></h5>
+                                    <p class="placeContent"><%= place.content %></p>
+                                    <div align="center">
+                                        <% if user_signed_in? then %>
+                                            <a id="like" class="btn btn-hg btn-warning" onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
+                                        <% end %>
+                                    </div>
+                                    <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
+                                </div>
+                            </div>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+                <div class="pagination-wrapper" align="center">
+                    <% unless @place.count == 0 then %>
+                        <%= will_paginate @place %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

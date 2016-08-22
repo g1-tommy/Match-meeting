@@ -1,0 +1,151 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="row">
+        	<div class="four columns">
+        		<h3>장소 사용 예약</h3>
+	            팀플 활동을 위한 장소 예약 페이지입니다.
+	            <hr>
+	            <p>
+	                선택된 그룹<br>
+	                <b><i id="selectedGroup"><%= Group.find(params[:group_id]).name %></i></b><br><br>
+	                올바르게 선택되었는지 예약전 반드시 확인바랍니다.
+	            </p>
+	            <hr>
+	            <div align="center" id="canReserved" class="tip">원하는 날짜 및 시간을 선택하시면 예약 가능 여부를 확인하실 수 있습니다.</div>
+	            <br>
+	            <section align="center" class="tile" id="available">
+	                 현재 선택된 날짜<br>
+	                 <span id="selectedDate">8월 20일</span><br><br>
+	                 원하시는 예약 시간<br>
+	                 <span id="selectedTime"></span>
+	            </section>
+	            <div class="resvTile" align="center" id="isAvailable"></div>
+	            <hr>
+        	</div>
+        	
+        	<div class="eight columns">
+	             <h4><div id="sp_title"></div></h4>
+	             <hr>
+        		 <form method="POST" action="/find/place/apply/<%= params[:place_id] %>">
+        		 	<h5>날짜 선택</h5>
+	                <div id="calendar"></div>
+	                <br>
+	                <h5>시작 시간 선택</h5>
+	                <div class="input-group clockpicker">
+	                    <input id="resv_time" name="resv_time" type="text" class="form-control" value="18:00">
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-time"></span>
+	                    </span>
+	                </div>
+	                <br>
+	                <h5>종료 시간 선택</h5>
+	                <div class="input-group clockpicker">
+	                    <input id="duration_time" name="duration_time" type="text" class="form-control" value="19:00">
+	                    <span class="input-group-addon">
+	                        <span class="glyphicon glyphicon-time"></span>
+	                    </span>
+	                </div>
+	                <hr>
+	                <input type="hidden" id="open" value="<%= Place.find(params[:place_id]).open %>">
+	                <input type="hidden" id="close" value="<%= Place.find(params[:place_id]).close %>">
+	                <input type="hidden" name="selectedDate">
+	                <input type="hidden" name="group_id" value="<%= params[:group_id] %>">
+	                <input type="submit" value="해당일에 장소 예약" class="btn btn-hg btn-block btn-success">
+                </form>
+        	</div>
+        </div>
+    </div>
+</main>
+<script>
+
+// theaterJS start
+      var theater = theaterJS();
+        theater.on('type:start, erase:start', function () {
+            theater.getCurrentActor().$element.classList.add('actor__content--typing');
+        }).on('type:end, erase:end', function () {
+            theater.getCurrentActor().$element.classList.remove('actor__content--typing');
+        });
+        
+        theater
+        .addActor('sp_title')
+        .addScene('sp_title:현재 선택된 장소 : <%= Place.find(params[:place_id]).name %>', 1000)
+        .addScene(theater.replay.bind(theater));
+// END
+
+// Calendar & Clockpicker
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if(dd<10) {
+    	dd='0'+dd
+	} 
+	
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	
+	today = yyyy+'-'+mm+'-'+dd;
+$(document).ready(function() {
+
+	$("input[name='selectedDate']").val(today);
+	$("#selectedDate").html(today).css('color', 'red').css('font-weight','700');
+	$("#selectedTime").css('color', 'red').css('font-weight','700').html($("#resv_time").val() + " ~ " + $("#duration_time").val());
+    isResvAvailable(today, $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
+});
+    
+    //Clockpicker for Place Applies
+    $(".clockpicker").clockpicker({
+    	donetext:'선택',
+    	afterDone:function(){
+    		$("#selectedTime").html($("#resv_time").val() + " ~ " + $("#duration_time").val());
+    		if(Date.parse(today+' '+$("#resv_time").val()) >= Date.parse(today+' '+$("#duration_time").val())){
+    			alert("시작 시간이 종료 시간보다 늦거나 동일할 수 없습니다.")
+        		$("div#isAvailable").html("예약 불가");
+        		$("input[type='submit']").attr('disabled', true);
+    		$("#selectedTime").html($("#resv_time").val() + " ~ " + $("#duration_time").val() + "<br>잘못된 값");
+    		}else{
+	        	if(parseInt($("#resv_time").val().substring(0,2)) < $("#open").val() ||
+	        	   parseInt($("#resv_time").val().substring(0,2)) > $("#close").val() ||
+	        	   parseInt($("#duration_time").val().substring(0,2)) > $("#close").val()){
+	        		$("div#isAvailable").html("예약 불가");
+	        		$("input[type='submit']").attr('disabled', true);
+	        	}else{
+	        		isResvAvailable($("input[name='selectedDate']").val(), $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
+	        	}
+    		}
+    	}
+    });
+
+    //Fullcalendar for Place Applies
+    $("#calendar").fullCalendar({
+      dayClick: function(date, jsEvent, view) {
+        $("#selectedDate").html(date.format()).css('color', 'red').css('font-weight','700');
+        $("input[name='selectedDate']").val(date.format());
+        isResvAvailable(date.format(), $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
+      },
+      events: [
+      		<% Reservation.all.each do |r| %>
+				{
+					title: '<%= r.schedule.to_s.split(" ")[1][0..1] %>시 ~ <%= r.duration.to_s.split(" ")[1][0..1] %>시',
+					start: '<%= r.schedule.to_s.gsub(" ","T").gsub("TUTC","") %>',
+					end:'<%= r.duration.to_s.gsub(" ","T").gsub("TUTC","") %>',      
+        			currentTimezone: 'Asia/Seoul',
+        			allDay:true
+				},
+			<% end %>
+			],
+	  ignoreTimezone:false,
+	  loading:function(isLoading, view){
+	  	if(isLoading){
+	  		$(".spinner").css('display','block');
+	  	}else{
+	  		$(".spinner").css('display','none');
+	  	}
+	  }
+
+    });
+// END
+</script>

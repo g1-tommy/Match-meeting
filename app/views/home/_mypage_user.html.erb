@@ -1,0 +1,167 @@
+<section class="row">
+<!--USER INFOMATION AREA-->
+    <div class="four columns" align="center">
+        <h4>가입한 그룹</h4>
+        <hr>
+        <h1><%= @affiliated.count %>개</h1>
+        <a data-scroll href="#signed"><button class="btn btn-lg btn-block btn-default btn-embossed">자세히</button></a>
+    </div>
+    <div class="four columns" align="center">
+        <h4>생성한 그룹</h4>
+        <hr>
+        <h1><%= @myGroup.count %>개</h1>
+        <a data-scroll href="#created"><button class="btn btn-lg btn-block btn-default btn-embossed">자세히</button></a>
+    </div>
+    <div class="four columns" align="center">
+        <h4>예약 신청 장소</h4>
+        <hr>
+        <h1><%= @myResv.count %>곳</h1>
+        <a data-scroll href="#requested"><button class="btn btn-lg btn-block btn-default btn-embossed">자세히</button></a>
+    </div>
+</section>
+<hr>
+<section class="tile">
+    <!--USER GROUP INFORMATION AREA-->
+    <h5 id="signed">가입된 그룹 목록</h5>
+        <ul>
+            <% if @affiliated.count == 0 then %>
+            <li>가입한 그룹이 존재하지 않습니다.</li>
+            <% else %>
+                <li class="tagsinput">
+                <% @affiliated.each do |list| %>
+                    <a class="tag" href="/find/group/detail/<%= list.id %>"><%= list.name %></a>
+                <% end %>
+                </li>
+            <% end %>
+        </ul>
+        <br>
+    <h5 id="created">생성한 그룹 목록</h5>
+        <ul>
+            <% if @myGroup.count == 0 then %>
+            <li>생성하신 그룹이 존재하지 않습니다.</li>
+            <% else %>
+                <li class="tagsinput">
+                <% @myGroup.each do |list| %>
+                    <a class="tag" href="/find/group/detail/<%= list.id %>">
+                        <%= list.name %>
+                    </a>
+                <% end %>
+                </li>
+            <% end %>
+        </ul>
+        <br>
+    <!--USER REQUESTED PLACE INFORMATION AREA-->
+    <h5 id="requested">예약 신청한 장소 목록</h5>
+    <% if @myResv.count == 0 then %>
+    예약 신청한 장소가 없습니다.
+    <% else %>
+        <ul>
+            <li class="tagsinput">
+                <% @myResv.each do |list| %>
+                    <a class="tag" href="/mypage/reservations/<%= list.first %>">
+                        <%= list.last %>
+                    </a>
+                <% end %>
+            </li>
+        </ul>
+    <% end %>
+</section>
+<% unless @timetable_msg == true then %>
+<script>
+    var timetable = new Timetable();
+    timetable.setScope(9, 20); // optional, only whole hours between 0 and 23
+    timetable.addLocations(['월', '화', '수', '목', '금']);
+    <% i = 9 %>
+    <% @mon.each do |mon| %>
+        <% case mon %>
+            <% when 1 # 2,2,2,2 %>
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 2 # 2,1,2,2 %>
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 3 # 2,2,2,1 %>
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 45));
+            <% when 4 # 2,1,1,1 %>
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            <% when 5 # DO NOTHING %>
+            <% when 6 # 1,1,2,2 %>
+            timetable.addEvent('★', '월', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+        <% end %>
+        <% i = i+1 %>
+    <% end %>
+    <% i = 9 %>
+    <% @tue.each do |tue| %>
+        <% case tue %>
+            <% when 1 # 2,2,2,2 %>
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 2 # 2,1,2,2 %>
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 3 # 2,2,2,1 %>
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 45));
+            <% when 4 # 2,1,1,1 %>
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            <% when 5 # DO NOTHING %>
+            <% when 6 # 1,1,2,2 %>
+            timetable.addEvent('★', '화', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+        <% end %>
+        <% i = i+1 %>
+    <% end %>
+    <% i = 9 %>
+    <% @wed.each do |wed| %>
+        <% case wed %>
+            <% when 1 # 2,2,2,2 %>
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 2 # 2,1,2,2 %>
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 3 # 2,2,2,1 %>
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 45));
+            <% when 4 # 2,1,1,1 %>
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            <% when 5 # DO NOTHING %>
+            <% when 6 # 1,1,2,2 %>
+            timetable.addEvent('★', '수', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+        <% end %>
+        <% i = i+1 %>
+    <% end %>
+    <% i = 9 %>
+    <% @thu.each do |thu| %>
+        <% case thu %>
+            <% when 1 # 2,2,2,2 %>
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 2 # 2,1,2,2 %>
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 3 # 2,2,2,1 %>
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 45));
+            <% when 4 # 2,1,1,1 %>
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            <% when 5 # DO NOTHING %>
+            <% when 6 # 1,1,2,2 %>
+            timetable.addEvent('★', '목', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+        <% end %>
+        <% i = i+1 %>
+    <% end %>
+    <% i = 9 %>
+    <% @fri.each do |fri| %>
+        <% case fri %>
+            <% when 1 # 2,2,2,2 %>
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 2 # 2,1,2,2 %>
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+            <% when 3 # 2,2,2,1 %>
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 45));
+            <% when 4 # 2,1,1,1 %>
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 0), new Date(0, 0, 0, <%= i %>, 15));
+            <% when 5 # DO NOTHING %>
+            <% when 6 # 1,1,2,2 %>
+            timetable.addEvent('★', '금', new Date(0, 0, 0, <%= i %>, 30), new Date(0, 0, 0, <%= i+1 %>, 0));
+        <% end %>
+        <% i = i+1 %>
+    <% end %>
+    var renderer = new Timetable.Renderer(timetable);
+    renderer.draw('.timetable'); // any css selector
+</script>
+<% end %>

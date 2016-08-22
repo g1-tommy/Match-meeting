@@ -1,0 +1,75 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <% flash.each do |key, value| %>
+        <div class="row">
+            <div class="tip <%= key %>" align="center">
+                <%= value %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" style="color:white;">&times;</span></button>
+            </div>
+            
+        </div>
+        <br>
+        <% end %>
+        <div class="row">
+            <div class="four columns">
+                <h4><%= @session %>님</h4>
+                <% if user_signed_in? then %>
+                    <span>학생 계정</span>
+                    <hr>
+                    <section align="center" class="tile">
+                        <!--USER TIMETABLE AREA-->
+                        <h5>시간표</h5>
+                        <hr>
+                        <% unless @timetable_msg == true then %>
+                        <div class="timetable"></div>
+                        <br>
+                        <a href="/mypage/timetable/edit"><button class="btn btn-lg btn-block btn-warning btn-embossed">시간표 수정</button></a>
+                        <% else %>
+                        <b>시간표 정보가 없습니다.<br>시간표를 생성하셔야그룹 가입 및 팀플 시간 추천이 가능합니다.</b>
+                        <hr>
+                        <a href="/mypage/timetable/"><button class="btn btn-lg btn-block btn-danger btn-embossed">시간표 생성</button></a>    
+                        <% end %>
+                    </section>
+                <% elsif owner_signed_in? then %>
+                    <span>카페 주인 계정</span>
+                    <hr>
+                    <section class="row tile">
+                    <!--OWNER INFOMATION AREA-->
+                        <div align="center">
+                            <h4>예약된 건</h4>
+                            <hr>
+                            <h1><%= Reservation.where(place_id: Place.where(creator: current_owner.email).first.id).count %>건</h1>
+                            <a data-scroll href="#reserved"><button class="btn btn-lg btn-block btn-default">자세히</button></a>
+                        </div>
+                    </section>
+                <% end %>
+            </div>
+            <div class="eight columns">
+                <% if user_signed_in? then %>
+                    <%= render 'home/mypage_user' %>
+                <% elsif owner_signed_in? then %>
+                    <%= render 'home/mypage_owner' %>
+                <% end %>
+                <hr>
+                <div class="row">
+                    <div class="six columns">
+                    <% if user_signed_in? then %>
+                      <a href="<%= edit_user_registration_path %>"><button class="btn btn-lg btn-block btn-warning btn-embossed">회원정보 수정</button></a>
+                    </div>
+                    <div class="six columns">
+                        <a href="<%= edit_user_registration_path + '#destroy' %>"><button class="btn btn-lg btn-block btn-danger btn-embossed">회원 탈퇴</button></a>
+                    </div>
+                    <% elsif owner_signed_in? then %>
+                      <a href="<%= edit_owner_registration_path %>"><button class="btn btn-lg btn-block btn-warning btn-embossed">회원정보 수정</button></a>
+                      </div>
+                    <div class="six columns">
+                        <a href="<%= edit_owner_registration_path + '#destroy' %>"><button class="btn btn-lg btn-block btn-danger btn-embossed">회원 탈퇴</button></a>
+                    </div>
+                    <% end %>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</main>

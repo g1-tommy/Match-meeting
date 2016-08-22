@@ -1,0 +1,46 @@
+<%= render 'home/navbar' %>
+<main>
+    <div class="container">
+        <div class="tip" align="center">[유의사항] 장소 예약은 그룹 생성자만 가능합니다.</div>
+        <hr>
+        <h3>장소를 사용할 그룹 선택</h3>
+        <hr>
+        <% if @myGroup.count == 0 then %>
+            예약 신청할 수 있는 그룹이 존재하지 않습니다.
+            <hr>
+            <%= link_to "돌아가기", "/find/place/detail/"+params[:place_id], class:"btn btn-lg btn-block btn-info" %>
+        <% else %>
+            <% i = 1 %>
+            <% @myGroup.each do |group| %>
+                <% if i % 2 == 1 then %>
+                <div class="row">
+                    <div class="tile six columns">
+                        <h5><%= group.name %></h5>
+                        <hr>
+                        <% if Reservation.where(place_id: params[:place_id], group_id: group.id).count == 0 then %>
+                            <%= button_to "예약 진행", "/find/place/apply", {method: :post, params:{place_id: params[:place_id], group_id: group.id}, class:"btn btn-lg btn-block btn-warning"} %>
+                        <% else %>
+                            <%= button_to "예약 진행", "/find/place/apply/before/cautions", {method: :post, params:{place_id: params[:place_id], group_id: group.id}, class:"btn btn-lg btn-block btn-warning"} %>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <div class="tile six columns">
+                        <h5><%= group.name %></h5>
+                        <hr>
+                        <% if Reservation.where(place_id: params[:place_id], group_id: group.id).count == 0 then %>
+                            <%= button_to "예약 진행", "/find/place/apply", {method: :post, params:{place_id: params[:place_id], group_id: group.id}, class:"btn btn-lg btn-block btn-warning"} %>
+                        <% else %>
+                            <%= button_to "예약 진행", "/find/place/apply/before/cautions", {method: :post, params:{place_id: params[:place_id], group_id: group.id}, class:"btn btn-lg btn-block btn-warning"} %>
+                        <% end %>
+                    </div>
+                </div>
+                <% end %>
+                <% i = i +1 %>
+            <% end %>
+            <% if @myGroup.count % 2 == 1 then %>
+                </div>
+            <% end %>
+        <% end %>
+        <hr>
+    </div>
+</main>
