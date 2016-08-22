@@ -2,9 +2,9 @@
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts")
 Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
 Rails.application.config.assets.precompile += %w( clockpicker.js )
+Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts")
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 

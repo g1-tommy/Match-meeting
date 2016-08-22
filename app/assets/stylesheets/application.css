@@ -16,16 +16,6 @@
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-@font-face {
-    font-family: "Bariol";
-    src: url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.eot");
-    src: url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.eot?#iefix") format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.woff2") format("woff2"),
-    url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.woff") format("woff"),
-    url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.ttf") format("truetype"),
-    url("//db.onlinewebfonts.com/t/bde64ed1422104421598829868974f43.svg#Bariol") format("svg");
-}
-
 * {
   margin: 0;
   -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
@@ -38,7 +28,7 @@
 }
 
 html, body {
-  font-family:'Bariol', 'Nanum Gothic', sans-serif !important;
+  font-family:'Bariol', 'BariolItalic', 'Nanum Gothic', sans-serif !important;
   background: linear-gradient(-20deg, #d23c39, #dca74a);
 }
 

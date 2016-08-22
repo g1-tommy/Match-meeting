@@ -1,3 +1,20 @@
+@font-face{ 
+	font-family: 'BariolItalic';
+	src: url('/assets/bariol_regular_italic-webfont.eot');
+	src: url('/assets/bariol_regular_italic-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('/assets/bariol_regular_italic-webfont.woff') format('woff'),
+	     url('/assets/bariol_regular_italic-webfont.ttf') format('truetype'),
+	     url('/assets/bariol_regular_italic-webfont.svg#webfont') format('svg');
+}
+
+@font-face{ 
+	font-family: 'Bariol';
+	src: url('/assets/bariol_regular-webfont.eot');
+	src: url('/assets/bariol_regular-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('/assets/bariol_regular-webfont.woff') format('woff'),
+	     url('/assets/bariol_regular-webfont.ttf') format('truetype'),
+	     url('/assets/bariol_regular-webfont.svg#webfont') format('svg');
+}
 @font-face {
   font-family: 'Flat-UI-Icons';
   src: url('/assets/flat-ui-icons-regular.eot');
