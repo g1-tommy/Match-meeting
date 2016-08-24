@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+﻿// This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -43,6 +43,18 @@ $(document).ready(function() {
     //TimeTable
     $(".schedule").css("visibility", "hidden");
 
+    //Amazon Mobile Analytics
+    AWS.config.region = 'us-east-1';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:0311119e-fa46-4f05-86d6-91d78dbe851a' //Amazon Cognito Identity Pool ID
+    });
+    
+    var options = {
+        appId : 'c2490fa794144410b3f6d0f7411b3b1b', //Amazon Mobile Analytics App ID
+    };
+    
+    var mobileAnalyticsClient = new AMA.Manager(options);
+    mobileAnalyticsClient.submitEvents();
   
 });
 
