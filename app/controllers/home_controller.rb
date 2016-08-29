@@ -64,6 +64,11 @@ class HomeController < ApplicationController
   def create_place
     if user_signed_in? then
       unauthorized
+    else
+      if Place.where(creator: current_owner.email).count > 0 then
+        flash[:already]="이미 장소를 생성한 이력이 있습니다."
+        redirect_to mypage_path
+      end
     end
   end
   
