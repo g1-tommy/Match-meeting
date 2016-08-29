@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="row">
-            <% if @resvInfo.id == 0 then%>
+            <% if @resvInfo.confirm == 0 then%>
                 <hr>
                 <%= button_to "예약 취소", "/mypage/reservations/cancel/", {params:{resv_id: params[:resv_id]}, class:"btn btn-hg btn-block btn-danger"} %>
                 <hr>
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="row">
-            <% if @resvInfo.id == 0 then%>
+            <% if @resvInfo.confirm == 0 then%>
                 <hr>
                 <%= button_to "예약 승인", "/mypage/reservations/confirm/", {params:{resv_id: params[:resv_id]}, class:"btn btn-hg btn-block btn-warning"} %>
                 <hr>
