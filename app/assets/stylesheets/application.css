@@ -37,7 +37,11 @@
 
 html, body {
   font-family: 'Bariol', 'Nanum Gothic', sans-serif !important;
-  background: linear-gradient(-20deg, #d23c39, #dca74a); }
+  background: linear-gradient(20deg, #104a72, #5dd19c 75%, #fffae8); }
+  
+  body{
+    min-height: 100%;
+  }
 
 ::-webkit-scrollbar {
   width: 12px; }

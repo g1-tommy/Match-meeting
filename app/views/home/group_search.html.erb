@@ -6,7 +6,7 @@
                 <h4>그룹 찾기</h4>
                 <hr>
                 <%= form_tag("/find/group/search", method: "POST", class:"todo-search") do %>
-                    <%= search_field_tag 'query', nil, class:"todo-search-field", value: params[:query], placeholder:"Search" %>
+                    <%= search_field_tag 'query', nil, class:"todo-search-field", value: params[:query], placeholder:"팀플명 검색" %>
                 <% end %>
             </div>
             <div class="nine columns">

@@ -8,12 +8,12 @@
                 <section>
                     <span><b>검색</b></span><br>
                     <%= form_tag("/find/group/search", method: "POST", class:"todo-search") do %>
-                        <%= search_field_tag 'query', nil, class:"todo-search-field", placeholder:"Search" %>
+                        <%= search_field_tag 'query', nil, class:"todo-search-field", placeholder:"팀플명 검색" %>
                     <% end %>
                 </section>
             </div>
             <div class="nine columns">
-                <h5>팀플 그룹 목록</h5>
+                <h5> [<%=@school%>] 팀플 그룹 목록</h5>
                 <hr>
                 <div class="container">
                         <% if @group.count == 0 then %>

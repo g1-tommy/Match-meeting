@@ -52,6 +52,8 @@
         </div>
         <div class="eight columns">
             <p>
+                <h5>그룹 소속</h5>
+                <%= @group.school %>
                 <h5>그룹 정보</h5>
                 <%= @group.content %>
                 <% if @creator==true or @signed==true then %>

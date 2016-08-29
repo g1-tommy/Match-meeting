@@ -36,20 +36,29 @@
                     <hr>
                     <section class="row tile">
                     <!--OWNER INFOMATION AREA-->
-                        <div align="center">
-                            <h4>예약된 건</h4>
-                            <hr>
-                            <h1><%= Reservation.where(place_id: Place.where(creator: current_owner.email).first.id).count %>건</h1>
-                            <a data-scroll href="#reserved"><button class="btn btn-lg btn-block btn-default">자세히</button></a>
-                        </div>
+                            <% if Place.where(creator: current_owner.email).count != 0 then %>
+                             <div align="center">
+                                <h4>예약된 건</h4>
+                                <hr>
+                                <h1><%= Reservation.where(place_id: Place.where(creator: current_owner.email).first.id).count %>건</h1>
+                                <a data-scroll href="#reserved"><button class="btn btn-lg btn-block btn-default">자세히</button></a>
+                            </div>
                     </section>
+                            <% else %>
+                            <div class="tip" align="center">등록된 장소가 없어 표시할 정보가 없습니다.</div>
+                    </section>
+                            <% end %>
+                            
                 <% end %>
             </div>
             <div class="eight columns">
                 <% if user_signed_in? then %>
                     <%= render 'home/mypage_user' %>
                 <% elsif owner_signed_in? then %>
+                    <% if Place.where(creator: current_owner.email).count != 0 then %>
                     <%= render 'home/mypage_owner' %>
+                    <% else %>
+                    <% end %>
                 <% end %>
                 <hr>
                 <div class="row container">

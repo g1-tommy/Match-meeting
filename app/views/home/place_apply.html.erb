@@ -103,14 +103,14 @@ $(document).ready(function() {
     		$("#selectedTime").html($("#resv_time").val() + " ~ " + $("#duration_time").val());
     		if(Date.parse(today+' '+$("#resv_time").val()) >= Date.parse(today+' '+$("#duration_time").val())){
     			alert("시작 시간이 종료 시간보다 늦거나 동일할 수 없습니다.")
-        		$("div#isAvailable").html("예약 불가");
+        		$("div#isAvailable").html("예약 불가").css("background", "linear-gradient(-20deg, #d23c39, #dca74a)");
         		$("input[type='submit']").attr('disabled', true);
     		$("#selectedTime").html($("#resv_time").val() + " ~ " + $("#duration_time").val() + "<br>잘못된 값");
     		}else{
 	        	if(parseInt($("#resv_time").val().substring(0,2)) < $("#open").val() ||
 	        	   parseInt($("#resv_time").val().substring(0,2)) > $("#close").val() ||
 	        	   parseInt($("#duration_time").val().substring(0,2)) > $("#close").val()){
-	        		$("div#isAvailable").html("예약 불가");
+	        		$("div#isAvailable").html("예약 불가").css("background", "linear-gradient(-20deg, #d23c39, #dca74a)");
 	        		$("input[type='submit']").attr('disabled', true);
 	        	}else{
 	        		isResvAvailable($("input[name='selectedDate']").val(), $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
@@ -122,12 +122,16 @@ $(document).ready(function() {
     //Fullcalendar for Place Applies
     $("#calendar").fullCalendar({
       dayClick: function(date, jsEvent, view) {
-        $("#selectedDate").html(date.format()).css('color', 'red').css('font-weight','700');
-        $("input[name='selectedDate']").val(date.format());
-        isResvAvailable(date.format(), $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
+      	if(new Date(date.format()) < new Date(today)){
+      		alert('이전 날짜에 대한 예약이 불가능합니다.');
+      	}else{
+	        $("#selectedDate").html(date.format()).css('color', 'red').css('font-weight','700');
+	        $("input[name='selectedDate']").val(date.format());
+	        isResvAvailable(date.format(), $("#resv_time").val(), $("#duration_time").val(), <%= params[:place_id] %>);
+      	}
       },
       events: [
-      		<% Reservation.all.each do |r| %>
+      		<% Reservation.where(place_id: params[:place_id]).each do |r| %>
 				{
 					title: '<%= r.schedule.to_s.split(" ")[1][0..1] %>시 ~ <%= r.duration.to_s.split(" ")[1][0..1] %>시',
 					start: '<%= r.schedule.to_s.gsub(" ","T").gsub("TUTC","") %>',

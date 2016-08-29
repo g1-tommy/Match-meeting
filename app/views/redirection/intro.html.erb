@@ -1,17 +1,16 @@
 <%= render 'home/navbar' %>
 <main class="intro valign-wrapper" align="center">
-    <div class="valign">
-        <h1>SERVICE NAME</h1>
-        <hr>
-        <quote>팀프로젝트를 좀 더 마음 편하게 할 수는 없을까?</quote>
-        <p><i>SERVICE NAME</i>은 팀프로젝트를 좀 더 편리하게 진행할 수 있게끔<br>팀 전용 페이지 생성하고 관리할 수 있는 기능을 제공할 뿐만 아니라,<br>팀원 간 프로젝트 수행 가능 시간을 추천해드리고,<br>필요한 경우 대관 관련 기관과의 연계로 팀프로젝트를 수행할 수 있는,<br>장소를 예약하실 수 있는 서비스를 제공해드립니다.</p>
-        <hr>
-        <% if user_signed_in? then %>
-            <%= link_to "팀프로젝트 그룹 생성", "/create/group", {method: :get, class:"btn btn-block btn-lg btn-success"} %><br>
-        <% else %>
-            <%= link_to "장소 등록", "/create/place", {method: :get, class:"btn btn-block btn-lg btn-success"} %><br>
-        <% end %>
-        <%= link_to "서비스 이용 방법", "/how_to", class:"btn btn-block btn-lg btn-info" %>
-        
-    </div>
+        <div class="tile">
+            <h1>이것은... 팀플의 세계</h1>
+            <hr>
+            <quote>팀프로젝트를 좀 더 마음 편하게 할 수는 없을까?</quote>
+            <p><i>팀플의 세계</i>는 팀프로젝트를 좀 더 편리하게 진행할 수 있게끔<br>팀 전용 페이지 생성하고 관리할 수 있는 기능을 제공할 뿐만 아니라,<br>팀원 간 프로젝트 수행 가능 시간을 추천해드리고,<br>필요한 경우 대관 관련 기관과의 연계로 팀프로젝트를 수행할 수 있는,<br>장소를 예약하실 수 있는 서비스를 제공해드립니다.</p>
+            <hr>
+            <% if user_signed_in? then %>
+                <%= link_to "팀프로젝트 그룹 생성", "/create/group", {method: :get, class:"btn btn-block btn-lg btn-success"} %><br>
+            <% else %>
+                <%= link_to "장소 등록", "/create/place", {method: :get, class:"btn btn-block btn-lg btn-success"} %><br>
+            <% end %>
+            <%= link_to "서비스 이용 방법", "/how_to", class:"btn btn-block btn-lg btn-info" %>
+        </div>
 </main>

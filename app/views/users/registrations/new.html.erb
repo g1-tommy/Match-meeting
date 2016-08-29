@@ -3,7 +3,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
         <span class="sr-only">Toggle navigation</span>
       </button>
-      <a class="navbar-brand" href="/">SERVICE NAME</a>
+      <a class="navbar-brand" href="/">팀플의 세계</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <p class="navbar-text navbar-right">로그인이 필요합니다.</p>
@@ -19,7 +19,7 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "login-form"}) do |f| %>
       <div class="form-group">
         <%= f.label :email, "이메일" %><br />
-        <%= f.email_field :email, autofocus: true, class:"form-control" %>
+        <%= f.email_field :email, autofocus: true, class:"form-control", require: true %>
       </div>
     
       <div class="form-group">
@@ -38,7 +38,19 @@
     
       <div class="form-group">
         <%= f.label :phone_number, "연락처" %><br />
-        <%= f.text_field :phone, class:"form-control" %>
+        <%= f.text_field :phone, require: true ,class:"form-control" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :school, "학교" %><br />
+        <select name="user[school]" class="form-control" id="user_school">
+           <optgroup label="======학교를 선택해 주세요======">
+              <option value="아주대학교" selected>아주대학교</option>
+              <option value="경기대학교">경기대학교</option>
+              <option value="성균관대학교">성균관대학교</option>
+              <option value="수원대학교">수원대학교</option>
+            </optgroup>
+        </select>
       </div>
       
       <div class="actions">

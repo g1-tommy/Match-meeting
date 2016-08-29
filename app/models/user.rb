@@ -3,11 +3,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+   validates_presence_of :school
 end
 
 class User::ParameterSanitizer < Devise::ParameterSanitizer
   def initialize(*)
     super
-    permit(:sign_up, keys: [:username, :email,:phone])
+    permit(:sign_up, keys: [:username, :email, :phone, :school])
+    permit(:account_update , keys: [:school])
   end
 end

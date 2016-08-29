@@ -43,6 +43,7 @@ class HomeController < ApplicationController
   def create_group_exec
     if user_signed_in? then
       insert = Group.new
+      insert.school = params[:school]
       insert.name = params[:name]
       insert.content = params[:content]
       insert.member = params[:max].to_i
@@ -159,7 +160,13 @@ class HomeController < ApplicationController
   
   # GROUP
   def group
-    @group = Group.all.paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
+    if user_signed_in? then
+      @school = current_user.school
+      # @group = Group.all.paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
+      @group = Group.where(:school => @school).paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
+    else
+      @group = Group.paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
+    end
   end
   
   def group_apply_exec
@@ -274,7 +281,7 @@ class HomeController < ApplicationController
   end
   
   def group_search
-    @result = Group.where("name LIKE ?","%#{params[:query]}%").paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
+    @result = Group.where(:school => current_user.school).where("name LIKE ?","%#{params[:query]}%").paginate(:page => params[:page], :per_page => 8).order('created_at DESC')
   end
   # END
   

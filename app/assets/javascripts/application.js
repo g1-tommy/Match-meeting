@@ -64,31 +64,31 @@ function addTimetableEvent(){
   var $day = $("#day optgroup option:selected").val();
   var $startValue = $("#start optgroup option:selected");
   var $endValue = $("#end optgroup option:selected");
-  if($startValue.val() > $endValue.val()){
+  if(parseInt($startValue.val()) > parseInt($endValue.val())){
     alert("시작 교시가 종료 교시보다 늦을 수 없습니다.");
   }else{
-      var color = randColor();
-      for($i=$startValue.val();$i<=$endValue.val();$i++){
-        $(".check_"+$day+"_"+$i+"_"+$type).attr("value", 2);
-        $(".td_"+$day+"_"+$i+"_"+$type).css("background-color", color);
-      }
+    var color = randColor();
+    for($i=parseInt($startValue.val());$i<=parseInt($endValue.val());$i++){
+      $(".check_"+$day+"_"+$i+"_"+$type).attr("value", 2);
+      $(".td_"+$day+"_"+$i+"_"+$type).css("background-color", color);
+    }
   }
 }
 
 function timetable_selection(value){
   if(value == 2){
     var numericOptions = {
-      "1교시":1, "1.5교시":1.5,
-      "2교시":2, "2.5교시":2.5,
-      "3교시":3, "3.5교시":3.5,
-      "4교시":4, "4.5교시":4.5,
-      "5교시":5, "5.5교시":5.5,
-      "6교시":6, "6.5교시":6.5,
-      "7교시":7, "7.5교시":7.5,
-      "8교시":8, "8.5교시":8.5,
-      "9교시":9, "9.5교시":9.5,
-      "10교시":10, "10.5교시":10.5,
-      "11교시":11, "11.5교시":11.5,
+      "1교시":1,
+      "2교시":2,
+      "3교시":3,
+      "4교시":4,
+      "5교시":5,
+      "6교시":6,
+      "7교시":7,
+      "8교시":8,
+      "9교시":9,
+      "10교시":10,
+      "11교시":11
     };
     
     var $start = $("#start > optgroup");
@@ -144,13 +144,13 @@ function use_this_place(){
 }
 
 function like_it(user_id, place_id){
-   if(!($(".like").hasClass("disabled"))){
+   if(!($(".like_"+place_id).hasClass("disabled"))){
       $.ajax({
         method:"post",
         url: '/find/place/like/',
         data:{uid: user_id, pid: place_id},
         success:function(data){
-          $(".like").text("♥ "+data.likes).attr("disabled", "disabled").addClass("disabled").attr("data-toggle", "tooltip").attr("title", "이미 추천하셨습니다.");
+          $(".like_"+place_id).text("♥ "+data.likes).attr("disabled", "disabled").addClass("disabled").attr("data-toggle", "tooltip").attr("title", "이미 추천하셨습니다.");
         }
       });
    }
@@ -163,10 +163,10 @@ function isResvAvailable(date, start, end, place_id){
     data:{when: date, schedule: start, duration: end, pid: place_id},
     success:function(data){
       if(data.isAvailable == true){
-        $("div#isAvailable").html("예약 가능");
+        $("div#isAvailable").html("예약 가능").css("background", "linear-gradient(20deg, #6fe3e7, #4fb8d9 25%, #5648c1)");
         $("input[type='submit']").attr('disabled', false);
       }else{
-        $("div#isAvailable").html("예약 불가");
+        $("div#isAvailable").html("예약 불가").css("background", "linear-gradient(-20deg, #d23c39, #dca74a)");
        	$("input[type='submit']").attr('disabled', true);
       }
     }

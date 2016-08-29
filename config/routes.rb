@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   post '/mypage/timetable/edit' => 'home#timetable_edit_exec'
   
   # 세션 관리 - users : 학생 계정, owners : 카페 주인 계정
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: 'users/sessions' , registrations: 'users/registrations' }
   devise_for :owners, controllers: { sessions: 'users/sessions' }
   
   # The priority is based upon order of creation: first created -> highest priority.

@@ -20,6 +20,12 @@
                     <hr>
                     <span class="input input--nariko">
                     	<label class="input__label input__label--nariko" for="name">
+							<span class="input__label-content input__label-content--nariko">소속</span>
+						</label>
+                    	<%= text_field_tag(:school, nil, :value => current_user.school , :readonly => true, :required => true, class:"input__field input__field--nariko")%>
+                    </span><br>
+                    <span class="input input--nariko">
+                    	<label class="input__label input__label--nariko" for="name">
 							<span class="input__label-content input__label-content--nariko">그룹명</span>
 						</label>
                     	<%= text_field_tag(:name, nil, :required => true, class:"input__field input__field--nariko") %>

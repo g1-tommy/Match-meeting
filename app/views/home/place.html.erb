@@ -12,15 +12,15 @@
                     <% else %>
                         <% Place.all.order("likes DESC limit 1").each do |d| %>
                         <article class="tile">
-                            <h5><%= d.name %></h5>
-                            <p><%= d.content %></p>
+                            <h5 class="placeTitle"><%= d.name %></h5>
+                            <p class="placeContent"><%= d.content %></p>
                              <% if user_signed_in? %>
                                  <% if Place.find(d.id).who_likes_it.split('|').include? current_user.id.to_s %>
                                      <% @disabled = 'disabled' %>
                                  <% else %>
                                      <% @disabled = '' %>
                                  <% end %>
-                                 <a class="btn btn-hg btn-warning <%= @disabled %> like"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= d.id %>)">♥ <%= d.likes %></a><hr>
+                                 <a class="btn btn-hg btn-warning <%= @disabled %> like like_<%= d.id %>"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= d.id %>)">♥ <%= d.likes %></a><hr>
                              <% end %>
                             <a href="/find/place/detail/<%= d.id %>"><button class="btn btn-block btn-info btn-embossed">자세히</button></a>
                         </article>
@@ -44,6 +44,13 @@
                     <% else %>
                         <% i = 1 %>
                         <% @place.each do |place| %>
+                            <% if user_signed_in? then %>
+                                <% if Place.find(place.id).who_likes_it.split('|').include? current_user.id.to_s %>
+                                    <% @disabled = 'disabled' %>
+                                <% else %>
+                                    <% @disabled = '' %>
+                                <% end %>
+                            <% end %>
                             <% if i % 2 == 1 then %>
                             <div class="row">
                                 <div class="tile six columns">
@@ -51,12 +58,7 @@
                                     <p class="placeContent"><%= place.content %></p>
                                     <div align="center">
                                         <% if user_signed_in? %>
-                                            <% if Place.find(place.id).who_likes_it.split('|').include? current_user.id.to_s %>
-                                                <% @disabled = 'disabled' %>
-                                            <% else %>
-                                                <% @disabled = '' %>
-                                            <% end %>
-                                            <a class="btn btn-hg btn-warning <%= @disabled %> like"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
+                                            <a class="btn btn-hg btn-warning <%= @disabled %> like like_<%= place.id %>"  <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
                                         <% end %>
                                     </div>
                                     <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
@@ -67,7 +69,7 @@
                                     <p class="placeContent"><%= place.content %></p>
                                     <div align="center">
                                         <% if user_signed_in? then %>
-                                            <a id="like" class="btn btn-hg btn-warning" onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
+                                            <a class="btn btn-hg btn-warning <%= @disabled %> like like_<%= place.id %>" <%= @disabled %> onClick="like_it(<%= current_user.id %>,<%= place.id %>)">♥ <%= place.likes %></a><hr>
                                         <% end %>
                                     </div>
                                     <a href="/find/place/detail/<%= place.id %>"><button class="btn btn-lg btn-block btn-info btn-embossed">자세히</button></a>
