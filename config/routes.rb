@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   # 장소 예약 정보
   get '/mypage/reservations/:resv_id' => 'home#reservations'
   post '/mypage/reservations/cancel' => 'home#reservations_cancel'
+  post '/mypage/reservations/confirm' => 'home#reservations_confirm'
   
   # 장소 예약 가능 여부 확인
   post '/find/place/reservation/search' => 'home#resv_search'

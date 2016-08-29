@@ -154,6 +154,7 @@ class HomeController < ApplicationController
 
     elsif owner_signed_in? then
       @session = current_owner.email
+      @reservation = Reservation.where("place_id =?", )
     end
   end
   # END
@@ -504,6 +505,10 @@ class HomeController < ApplicationController
       @groupInfo = Group.find(Reservation.find(params[:resv_id]).group_id)
       @placeInfo = Place.find(Reservation.find(params[:resv_id]).place_id)
       @resvInfo = Reservation.find(params[:resv_id])
+    elsif owner_signed_in? then
+      @groupInfo = Group.find(Reservation.find(params[:resv_id]).group_id)
+      @placeInfo = Place.find(Reservation.find(params[:resv_id]).place_id)
+      @resvInfo = Reservation.find(params[:resv_id])
     else
       unauthorized
     end
@@ -540,6 +545,26 @@ class HomeController < ApplicationController
         redirect_to mypage_path
       else
         error_occurred
+      end
+    elsif owner_signed_in? then
+      if Reservation.find(params[:resv_id]).delete then
+        flash[:cancelled]="예약 취소가 완료되었습니다."
+        redirect_to mypage_path
+      else
+        error_occurred
+      end
+    else
+      unauthorized
+    end
+  end
+  
+  def reservations_confirm
+   if owner_signed_in? then
+      @reservation = Reservation.find(params[:resv_id])
+      @reservation.confirm = 1
+      if @reservation.save then
+        flash[:succeess] = "예약 완료되었습니다."
+        redirect_to mypage_path
       end
     else
       unauthorized

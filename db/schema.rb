@@ -60,8 +60,9 @@ ActiveRecord::Schema.define(version: 20160820133137) do
     t.integer  "place_id"
     t.integer  "group_id"
     t.datetime "schedule"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "confirm",    default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.datetime "duration"
   end
 
