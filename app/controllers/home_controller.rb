@@ -305,6 +305,7 @@ class HomeController < ApplicationController
       resv = Reservation.new
       resv.place_id = params[:place_id]
       resv.group_id = params[:group_id]
+      resv.confirm = 0
       resv.schedule = DateTime.parse("#{params[:selectedDate]} #{params[:resv_time]}")
       resv.duration = DateTime.parse("#{params[:selectedDate]} #{params[:duration_time]}")
       if resv.save then
