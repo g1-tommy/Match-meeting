@@ -1,4 +1,4 @@
-<p align="center"><img src="./aulikelion_logo.png" /></p>
+<p align="center"><img src="./aulikelion_logo.png" width="150" /></p>
 
 
 # Match-meeting
